@@ -34,19 +34,19 @@ def default_site_config(apps, schema_editor):
         ]
     )
 
-    Subject = apps.get_model("corecode", "Subject")
-    Subject.objects.bulk_create(
+    Course = apps.get_model("corecode", "Course")
+    Course.objects.bulk_create(
         [
-            Subject(name="Mathematics"),
-            Subject(name="English"),
+            Course(name="Mathematics"),
+            Course(name="English"),
         ]
     )
 
-    StudentClass = apps.get_model("corecode", "StudentClass")
-    StudentClass.objects.bulk_create(
+    SubjectClass = apps.get_model("corecode", "SubjectClass")
+    SubjectClass.objects.bulk_create(
         [
-            StudentClass(name="JSS 1"),
-            StudentClass(name="JSS 2"),
+            SubjectClass(name="JSS 1"),
+            SubjectClass(name="JSS 2"),
         ]
     )
 

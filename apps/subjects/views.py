@@ -10,46 +10,46 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from apps.finance.models import Invoice
 
-from .models import Student, StudentBulkUpload
+from .models import Subject, SubjectBulkUpload
 
 
-class StudentListView(LoginRequiredMixin, ListView):
-    model = Student
-    template_name = "students/student_list.html"
+class SubjectListView(LoginRequiredMixin, ListView):
+    model = Subject
+    template_name = "subjects/subject_list.html"
 
 
-class StudentDetailView(LoginRequiredMixin, DetailView):
-    model = Student
-    template_name = "students/student_detail.html"
+class SubjectDetailView(LoginRequiredMixin, DetailView):
+    model = Subject
+    template_name = "subjects/subject_detail.html"
 
     def get_context_data(self, **kwargs):
-        context = super(StudentDetailView, self).get_context_data(**kwargs)
-        context["payments"] = Invoice.objects.filter(student=self.object)
+        context = super(SubjectDetailView, self).get_context_data(**kwargs)
+        context["payments"] = Invoice.objects.filter(subject=self.object)
         return context
 
 
-class StudentCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
-    model = Student
+class SubjectCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    model = Subject
     fields = "__all__"
-    success_message = "New student successfully added."
+    success_message = "New subject successfully added."
 
     def get_form(self):
         """add date picker in forms"""
-        form = super(StudentCreateView, self).get_form()
+        form = super(SubjectCreateView, self).get_form()
         form.fields["date_of_birth"].widget = widgets.DateInput(attrs={"type": "date"})
         form.fields["address"].widget = widgets.Textarea(attrs={"rows": 2})
         form.fields["others"].widget = widgets.Textarea(attrs={"rows": 2})
         return form
 
 
-class StudentUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
-    model = Student
+class SubjectUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = Subject
     fields = "__all__"
     success_message = "Record successfully updated."
 
     def get_form(self):
         """add date picker in forms"""
-        form = super(StudentUpdateView, self).get_form()
+        form = super(SubjectUpdateView, self).get_form()
         form.fields["date_of_birth"].widget = widgets.DateInput(attrs={"type": "date"})
         form.fields["date_of_admission"].widget = widgets.DateInput(
             attrs={"type": "date"}
@@ -60,32 +60,32 @@ class StudentUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return form
 
 
-class StudentDeleteView(LoginRequiredMixin, DeleteView):
-    model = Student
-    success_url = reverse_lazy("student-list")
+class SubjectDeleteView(LoginRequiredMixin, DeleteView):
+    model = Subject
+    success_url = reverse_lazy("subject-list")
 
 
-class StudentBulkUploadView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
-    model = StudentBulkUpload
-    template_name = "students/students_upload.html"
+class SubjectBulkUploadView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    model = SubjectBulkUpload
+    template_name = "subjects/subjects_upload.html"
     fields = ["csv_file"]
-    success_url = "/student/list"
-    success_message = "Successfully uploaded students"
+    success_url = "/subject/list"
+    success_message = "Successfully uploaded subjects"
 
 
 class DownloadCSVViewdownloadcsv(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         response = HttpResponse(content_type="text/csv")
-        response["Content-Disposition"] = 'attachment; filename="student_template.csv"'
+        response["Content-Disposition"] = 'attachment; filename="subject_template.csv"'
 
         writer = csv.writer(response)
         writer.writerow(
             [
-                "registration_number",
+                "credit",
                 "surname",
                 "firstname",
-                "other_names",
-                "gender",
+                "online_sources",
+                "property",
                 "parent_number",
                 "address",
                 "current_class",

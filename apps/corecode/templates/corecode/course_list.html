@@ -3,14 +3,14 @@
 
 
 {% block title %}
-Subjects
+Courses
 {% endblock title %}
 
 
 {% block breadcrumb %}
   <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#modal1">
     <i class="fa fa-plus"></i>
-    Add new subject
+    Add new course
   </a>
 {% endblock breadcrumb %}
   
@@ -24,9 +24,9 @@ Subjects
             {% for object in object_list %}
             <tr>
               <td>{{ object }}</td>
-              <td><a href="{% url 'subject-update' object.id %}"><i
+              <td><a href="{% url 'course-update' object.id %}"><i
                     class="fa fa-edit"></i></a> <a
-                  href="{% url 'subject-delete' object.id %}"><i
+                  href="{% url 'course-delete' object.id %}"><i
                     class="fa fa-trash-alt"></i></a></td>
             </tr>
             {% endfor %}
@@ -40,9 +40,9 @@ Subjects
   <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form action="{% url 'subject-create' %}" method="POST">
+        <form action="{% url 'course-create' %}" method="POST">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add new subject</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Add new course</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>

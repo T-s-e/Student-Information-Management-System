@@ -7,12 +7,12 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("students", "0001_initial"),
+        ("subjects", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name="student",
+            model_name="subject",
             name="parent_mobile_number",
             field=models.CharField(
                 blank=True,

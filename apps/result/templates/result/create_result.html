@@ -2,7 +2,7 @@
 
 
 {% block title %}
-  Select Student(s) <span class="small">and then click on proceed</span>
+  Select Subject(s) <span class="small">and then click on proceed</span>
 {% endblock title %}
 
 
@@ -22,7 +22,7 @@
 
 {% block content %}
 
-  <table id="studenttable" class="table table-sm table-bordered" data-page-length='100'>
+  <table id="subjecttable" class="table table-sm table-bordered" data-page-length='100'>
     <thead class="thead-light">
       <tr>
         <th><input type="checkbox" id="selecter"></th>
@@ -31,11 +31,11 @@
       </tr>
     </thead>
     <tbody>
-      {% for student in students %}
+      {% for subject in subjects %}
         <tr>
-          <td><input type="checkbox" id="{{ student.id }}" name="students" value="{{ student.id}}"></td>
-          <td>{{student}} </td>
-          <td>{{student.current_class}}</td>
+          <td><input type="checkbox" id="{{ subject.id }}" name="subjects" value="{{ subject.id}}"></td>
+          <td>{{subject}} </td>
+          <td>{{subject.current_class}}</td>
         </tr>
       {% endfor %}
     </tbody>
@@ -50,16 +50,16 @@
 
 {% block morejs %}
 <script>
-  $('#studenttable').DataTable({
+  $('#subjecttable').DataTable({
     "ordering": false
   });
 
   $("#selecter").change(function () {
     if (this.checked) {
-      $('input[name="students"]').prop('checked', true);
+      $('input[name="subjects"]').prop('checked', true);
     }
     else {
-      $('input[name="students"]').prop('checked', false);
+      $('input[name="subjects"]').prop('checked', false);
     }
   });
 </script>

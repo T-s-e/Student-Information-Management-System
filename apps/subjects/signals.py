@@ -5,27 +5,27 @@ from io import StringIO
 from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 
-from apps.corecode.models import StudentClass
+from apps.corecode.models import SubjectClass
 
-from .models import Student, StudentBulkUpload
+from .models import Subject, SubjectBulkUpload
 
 
-@receiver(post_save, sender=StudentBulkUpload)
-def create_bulk_student(sender, created, instance, *args, **kwargs):
+@receiver(post_save, sender=SubjectBulkUpload)
+def create_bulk_subject(sender, created, instance, *args, **kwargs):
     if created:
         opened = StringIO(instance.csv_file.read().decode())
         reading = csv.DictReader(opened, delimiter=",")
-        students = []
+        subjects = []
         for row in reading:
-            if "registration_number" in row and row["registration_number"]:
-                reg = row["registration_number"]
+            if "credit" in row and row["credit"]:
+                reg = row["credit"]
                 surname = row["surname"] if "surname" in row and row["surname"] else ""
                 firstname = (
                     row["firstname"] if "firstname" in row and row["firstname"] else ""
                 )
-                other_names = (
-                    row["other_names"]
-                    if "other_names" in row and row["other_names"]
+                online_sources = (
+                    row["online_sources"]
+                    if "online_sources" in row and row["online_sources"]
                     else ""
                 )
                 gender = (
@@ -43,18 +43,18 @@ def create_bulk_student(sender, created, instance, *args, **kwargs):
                     else ""
                 )
                 if current_class:
-                    theclass, kind = StudentClass.objects.get_or_create(
+                    theclass, kind = SubjectClass.objects.get_or_create(
                         name=current_class
                     )
 
-                check = Student.objects.filter(registration_number=reg).exists()
+                check = Subject.objects.filter(credit=reg).exists()
                 if not check:
-                    students.append(
-                        Student(
-                            registration_number=reg,
+                    subjects.append(
+                        Subject(
+                            credit=reg,
                             surname=surname,
                             firstname=firstname,
-                            other_name=other_names,
+                            online_source=online_sources,
                             gender=gender,
                             current_class=theclass,
                             parent_mobile_number=phone,
@@ -63,7 +63,7 @@ def create_bulk_student(sender, created, instance, *args, **kwargs):
                         )
                     )
 
-        Student.objects.bulk_create(students)
+        Subject.objects.bulk_create(subjects)
         instance.csv_file.close()
         instance.delete()
 
@@ -74,13 +74,13 @@ def _delete_file(path):
         os.remove(path)
 
 
-@receiver(post_delete, sender=StudentBulkUpload)
+@receiver(post_delete, sender=SubjectBulkUpload)
 def delete_csv_file(sender, instance, *args, **kwargs):
     if instance.csv_file:
         _delete_file(instance.csv_file.path)
 
 
-@receiver(post_delete, sender=Student)
+@receiver(post_delete, sender=Subject)
 def delete_passport_on_delete(sender, instance, *args, **kwargs):
     if instance.passport:
         _delete_file(instance.passport.path)

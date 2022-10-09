@@ -4,7 +4,7 @@ from apps.corecode.models import (
     AcademicSession,
     AcademicTerm,
     SiteConfig,
-    Subject,
+    Course,
 )
 
 
@@ -26,7 +26,7 @@ class AcademicTermTest(TestCase):
         self.assertEqual(str(term), "test Term")
 
 
-class SubjectTest(TestCase):
-    def test_subject(self):
-        subject = Subject.objects.create(name="a_subject")
-        self.assertEqual(str(subject), "a_subject")
+class CourseTest(TestCase):
+    def test_course(self):
+        course = Course.objects.create(name="a_course")
+        self.assertEqual(str(course), "a_course")

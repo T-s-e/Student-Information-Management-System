@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="StudentBulkUpload",
+            name="SubjectBulkUpload",
             fields=[
                 (
                     "id",
@@ -27,11 +27,11 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("date_uploaded", models.DateTimeField(auto_now=True)),
-                ("csv_file", models.FileField(upload_to="students/bulkupload/")),
+                ("csv_file", models.FileField(upload_to="subjects/bulkupload/")),
             ],
         ),
         migrations.CreateModel(
-            name="Student",
+            name="Subject",
             fields=[
                 (
                     "id",
@@ -50,15 +50,15 @@ class Migration(migrations.Migration):
                         max_length=10,
                     ),
                 ),
-                ("registration_number", models.CharField(max_length=200, unique=True)),
+                ("credit", models.CharField(max_length=200, unique=True)),
                 ("surname", models.CharField(max_length=200)),
                 ("firstname", models.CharField(max_length=200)),
-                ("other_name", models.CharField(blank=True, max_length=200)),
+                ("online_source", models.CharField(blank=True, max_length=200)),
                 (
-                    "gender",
+                    "property",
                     models.CharField(
-                        choices=[("male", "Male"), ("female", "Female")],
-                        default="male",
+                        choices=["必修", "选修"],
+                        default="必修",
                         max_length=10,
                     ),
                 ),
@@ -72,7 +72,7 @@ class Migration(migrations.Migration):
                 ("others", models.TextField(blank=True)),
                 (
                     "passport",
-                    models.ImageField(blank=True, upload_to="students/passports/"),
+                    models.ImageField(blank=True, upload_to="subjects/passports/"),
                 ),
                 (
                     "current_class",
@@ -80,12 +80,12 @@ class Migration(migrations.Migration):
                         blank=True,
                         null=True,
                         on_delete=django.db.models.deletion.SET_NULL,
-                        to="corecode.StudentClass",
+                        to="corecode.SubjectClass",
                     ),
                 ),
             ],
             options={
-                "ordering": ["surname", "firstname", "other_name"],
+                "ordering": ["surname", "firstname", "online_source"],
             },
         ),
     ]

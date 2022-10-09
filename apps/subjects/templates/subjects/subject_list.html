@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Subjects{% endblock title %}
+
+{% block breadcrumb %}
+<a class="btn btn-primary" href="{% url 'subject-create' %}"><i
+    class="fas fa-plus"></i> New subject</a>
+<a class="btn btn-primary" href="{% url 'subject-upload' %}"><i
+    class="fas fa-upload"></i> Upload subjects</a>
+{% endblock breadcrumb %}
+
+{% block content %}
+  <div class="table-responsive">
+    <table id="subjecttable" class="table table-bordered table-hover" data-page-length='100'>
+      <thead class="thead-light">
+        <tr>
+          <th>S/N</th>
+          <th>Fullname</th>
+          <th>Credit</th>
+          <th>Current Class</th>
+          <th>Property</th>
+          <th>Mobile Phone Number</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for subject in object_list %}
+          <tr class='clickable-row' data-href="{% url 'subject-detail' subject.id %}">
+            <td>{{ forloop.counter}}</td>
+            <td>{{ subject.surname}} {{subject.firstname }} {{subject.online_source }}</td>
+            <td>{{ subject.credit}}</td>
+            <td>{{ subject.current_class}}</td>
+            <td>{{ subject.get_property_display}}</td>
+            <td>{{ subject.parent_mobile_number}}</td>
+            <td>{{ subject.get_current_status_display}}</td>
+          </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+{% endblock content %}
+
+
+{% block morejs %}
+<script>
+  $('#subjecttable').DataTable({
+  });
+</script>
+
+{% endblock morejs %}

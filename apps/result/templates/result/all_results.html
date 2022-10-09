@@ -5,14 +5,14 @@
   {% for key, result in results.items %}
     <div class="card">
       <div class="card-header">
-        {{result.student}}
+        {{result.subject}}
       </div>
       <div class="card-body">
         <table class="table table-bordered table-sm">
           <thead class="thead-light">
             <tr>
               <th></th>
-              <th>Subject</th>
+              <th>Course</th>
               <th>Test Score</th>
               <th>Exam Score</th>
               <th>Total Score</th>
@@ -20,14 +20,14 @@
             </tr>
           </thead>
           <tbody>
-            {% for subject in result.subjects %}
+            {% for course in result.courses %}
               <tr>
                 <td>{{ forloop.counter }}</td>
-                <td>{{ subject.subject }}</td>
-                <td>{{ subject.test_score }}</td>
-                <td>{{ subject.exam_score }}</td>
-                <td>{{ subject.total_score }}</td>
-                <td>{{ subject.grade }}</td>
+                <td>{{ course.course }}</td>
+                <td>{{ course.test_score }}</td>
+                <td>{{ course.exam_score }}</td>
+                <td>{{ course.total_score }}</td>
+                <td>{{ course.grade }}</td>
               </tr>
             {% endfor %}
           </tbody>

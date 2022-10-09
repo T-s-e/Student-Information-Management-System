@@ -3,14 +3,14 @@
 
 
 {% block title %}
-  Select all the subjects you want to create
+  Select all the courses you want to create
 {% endblock title %}
 
 
 {% block content %}
 
 
-  <p>You selected <b>{{ count }} students</b> from the previous page.</p>
+  <p>You selected <b>{{ count }} subjects</b> from the previous page.</p>
 
   <form method="POST">
     {% csrf_token %}
@@ -29,13 +29,13 @@
       <div class="col">{{ form.term | add_class:"form-control" }}</div>
     </div>
     <div class="form-group row">
-      {{ form.subjects.errors }}
-      <label class="col-2" for="{{ form.subjects.id_for_label }}">{{ form.subjects.label_tag}}</label>
-      <div class="col">{{ form.subjects | add_class:"form-check-input" }}</div>
+      {{ form.courses.errors }}
+      <label class="col-2" for="{{ form.courses.id_for_label }}">{{ form.courses.label_tag}}</label>
+      <div class="col">{{ form.courses | add_class:"form-check-input" }}</div>
     </div>
 
     <input type="hidden" name="finish" value="True">
-    <input type="hidden" name="students" value="{{ students }}">
+    <input type="hidden" name="subjects" value="{{ subjects }}">
 
     <input type="submit" class="btn btn-success" value="Create">
   </form>

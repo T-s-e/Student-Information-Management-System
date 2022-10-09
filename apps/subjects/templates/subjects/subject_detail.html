@@ -5,10 +5,10 @@
 <div class="card-header">
   <div class="card-tools">
     <a href="#" class="btn btn-tool">Print</a>
-    <a href="{% url 'student-update' object.id %}" class="btn btn-tool">
+    <a href="{% url 'subject-update' object.id %}" class="btn btn-tool">
       <i class="fas fa-edit"></i>
     </a>
-    <a href="{% url 'student-delete' object.id %}" class="btn btn-tool">
+    <a href="{% url 'subject-delete' object.id %}" class="btn btn-tool">
       <i class="fas fa-times"></i>
     </a>
   </div>
@@ -23,59 +23,55 @@
           {% if object.passport %}
             <img
               src="{{ object.passport.url }}"
-              class="float-left rounded-circle mr-3" style="width: 120px; height: 120px;">
+              class="float-left rounded-rectangle mr-3" style="width: 150px">
           {% else %}
             <img
-              src="{% static 'dist/img/avatar.png' %}"
-              class="float-left rounded-circle mr-3" style="width: 120px; height: 120px;">
+              src="{% static 'dist/img/avatar.jpg' %}"
+              class="float-left rounded-rectangle mr-3" style="width: 150px">
           {% endif %}
 
-
           <div class="float-right">
-            <h4>{{ object.surname }} </h4>
-            <h4>{{ object.firstname }} </h4>
-            <h4>{{ object.other_name }} </h4>
-            <h4>{{ object.registration_number }} </h4>
+        <h3>{{ object.subject }} </h3>
           </div>
         </div>
         <h5>{{ object.current_class }} </h5>
-        <h5>{{ object.get_gender_display }} | {{ object.get_current_status_display }}</h5>
+        <h5>{{ object.get_status_display }}</h5>
 
       </div>
       <div class="col-sm-8">
         <div>
           <div class="form-group border-bottom row">
             <label class="col">
-              Date of Birth
+              Professor
             </label>
             <div class="col">
-              {{ object.date_of_birth }}
+              {{ object.professor }}
             </div>
           </div>
 
           <div class="form-group border-bottom row">
             <label class="col">
-              Parent Mobile Number
+              Credit
             </label>
             <div class="col">
-              {{ object.parent_mobile_number}}
+              {{ object.credit}}
             </div>
           </div>
 
           <div class="form-group border-bottom row">
             <label class="col">
-              Address
+              Property
             </label>
             <div class="col">
-              {{ object.address }}
+              {{ object.property }}
             </div>
           </div>
           <div class="form-group border-bottom row">
             <label class="col">
-              Comments
+              Online Sourse
             </label>
             <div class="col">
-              {{ object.others }}
+              <a href={{ object.online_source }}>{{ object.online_source }}</a>
             </div>
           </div>
 

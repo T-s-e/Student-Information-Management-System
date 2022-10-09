@@ -5,8 +5,8 @@ from .models import (
     AcademicSession,
     AcademicTerm,
     SiteConfig,
-    StudentClass,
-    Subject,
+    SubjectClass,
+    Course,
 )
 
 SiteConfigForm = modelformset_factory(
@@ -35,19 +35,19 @@ class AcademicTermForm(ModelForm):
         fields = ["name", "current"]
 
 
-class SubjectForm(ModelForm):
-    prefix = "Subject"
+class CourseForm(ModelForm):
+    prefix = "Course"
 
     class Meta:
-        model = Subject
+        model = Course
         fields = ["name"]
 
 
-class StudentClassForm(ModelForm):
+class SubjectClassForm(ModelForm):
     prefix = "Class"
 
     class Meta:
-        model = StudentClass
+        model = SubjectClass
         fields = ["name"]
 
 

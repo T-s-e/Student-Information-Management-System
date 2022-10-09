@@ -65,7 +65,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name="StudentClass",
+            name="SubjectClass",
             fields=[
                 (
                     "id",
@@ -85,7 +85,7 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name="Subject",
+            name="Course",
             fields=[
                 (
                     "id",

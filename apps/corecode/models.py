@@ -39,7 +39,7 @@ class AcademicTerm(models.Model):
         return self.name
 
 
-class Subject(models.Model):
+class Course(models.Model):
     """Subject"""
 
     name = models.CharField(max_length=200, unique=True)
@@ -51,7 +51,7 @@ class Subject(models.Model):
         return self.name
 
 
-class StudentClass(models.Model):
+class SubjectClass(models.Model):
     name = models.CharField(max_length=200, unique=True)
 
     class Meta:

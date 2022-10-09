@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.views.generic import DetailView, ListView, View
 
-from apps.students.models import Student
+from apps.subjects.models import Subject
 
 from .forms import CreateResults, EditResults
 from .models import Result
@@ -12,28 +12,28 @@ from .models import Result
 
 @login_required
 def create_result(request):
-    students = Student.objects.all()
+    subjects = Subject.objects.all()
     if request.method == "POST":
 
         # after visiting the second page
         if "finish" in request.POST:
             form = CreateResults(request.POST)
             if form.is_valid():
-                subjects = form.cleaned_data["subjects"]
+                courses = form.cleaned_data["courses"]
                 session = form.cleaned_data["session"]
                 term = form.cleaned_data["term"]
-                students = request.POST["students"]
+                subjects = request.POST["subjects"]
                 results = []
-                for student in students.split(","):
-                    stu = Student.objects.get(pk=student)
+                for subject in subjects.split(","):
+                    stu = Subject.objects.get(pk=subject)
                     if stu.current_class:
-                        for subject in subjects:
+                        for course in courses:
                             check = Result.objects.filter(
                                 session=session,
                                 term=term,
                                 current_class=stu.current_class,
-                                subject=subject,
-                                student=stu,
+                                course=course,
+                                subject=stu,
                             ).first()
                             if not check:
                                 results.append(
@@ -41,16 +41,16 @@ def create_result(request):
                                         session=session,
                                         term=term,
                                         current_class=stu.current_class,
-                                        subject=subject,
-                                        student=stu,
+                                        course=course,
+                                        subject=stu,
                                     )
                                 )
 
                 Result.objects.bulk_create(results)
                 return redirect("edit-results")
 
-        # after choosing students
-        id_list = request.POST.getlist("students")
+        # after choosing subjects
+        id_list = request.POST.getlist("subjects")
         if id_list:
             form = CreateResults(
                 initial={
@@ -58,15 +58,15 @@ def create_result(request):
                     "term": request.current_term,
                 }
             )
-            studentlist = ",".join(id_list)
+            subjectlist = ",".join(id_list)
             return render(
                 request,
                 "result/create_result_page2.html",
-                {"students": studentlist, "form": form, "count": len(id_list)},
+                {"subjects": subjectlist, "form": form, "count": len(id_list)},
             )
         else:
-            messages.warning(request, "You didnt select any student.")
-    return render(request, "result/create_result.html", {"students": students})
+            messages.warning(request, "You didnt select any subject.")
+    return render(request, "result/create_result.html", {"subjects": subjects})
 
 
 @login_required
@@ -95,16 +95,16 @@ class ResultListView(LoginRequiredMixin, View):
         for result in results:
             test_total = 0
             exam_total = 0
-            subjects = []
-            for subject in results:
-                if subject.student == result.student:
-                    subjects.append(subject)
-                    test_total += subject.test_score
-                    exam_total += subject.exam_score
+            courses = []
+            for course in results:
+                if course.subject == result.subject:
+                    courses.append(course)
+                    test_total += course.test_score
+                    exam_total += course.exam_score
 
-            bulk[result.student.id] = {
-                "student": result.student,
-                "subjects": subjects,
+            bulk[result.subject.id] = {
+                "subject": result.subject,
+                "courses": courses,
                 "test_total": test_total,
                 "exam_total": exam_total,
                 "total_total": test_total + exam_total,

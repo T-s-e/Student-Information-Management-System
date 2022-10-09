@@ -1,3 +1,5 @@
+from distutils.log import info
+from time import time
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -7,25 +9,28 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, TemplateView, View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
+
 from .forms import (
     AcademicSessionForm,
     AcademicTermForm,
     CurrentSessionForm,
     SiteConfigForm,
-    StudentClassForm,
-    SubjectForm,
+    SubjectClassForm,
+    CourseForm,
 )
 from .models import (
     AcademicSession,
     AcademicTerm,
     SiteConfig,
-    StudentClass,
-    Subject,
+    SubjectClass,
+    Course,
 )
 
 
 class IndexView(LoginRequiredMixin, TemplateView):
     template_name = "index.html"
+
+
 
 
 class SiteConfigView(LoginRequiredMixin, View):
@@ -162,25 +167,25 @@ class TermDeleteView(LoginRequiredMixin, DeleteView):
 
 
 class ClassListView(LoginRequiredMixin, SuccessMessageMixin, ListView):
-    model = StudentClass
+    model = SubjectClass
     template_name = "corecode/class_list.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["form"] = StudentClassForm()
+        context["form"] = SubjectClassForm()
         return context
 
 
 class ClassCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
-    model = StudentClass
-    form_class = StudentClassForm
+    model = SubjectClass
+    form_class = SubjectClassForm
     template_name = "corecode/mgt_form.html"
     success_url = reverse_lazy("classes")
     success_message = "New class successfully added"
 
 
 class ClassUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
-    model = StudentClass
+    model = SubjectClass
     fields = ["name"]
     success_url = reverse_lazy("classes")
     success_message = "class successfully updated."
@@ -188,7 +193,7 @@ class ClassUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
 
 class ClassDeleteView(LoginRequiredMixin, DeleteView):
-    model = StudentClass
+    model = SubjectClass
     success_url = reverse_lazy("classes")
     template_name = "corecode/core_confirm_delete.html"
     success_message = "The class {} has been deleted with all its attached content"
@@ -200,42 +205,42 @@ class ClassDeleteView(LoginRequiredMixin, DeleteView):
         return super(ClassDeleteView, self).delete(request, *args, **kwargs)
 
 
-class SubjectListView(LoginRequiredMixin, SuccessMessageMixin, ListView):
-    model = Subject
-    template_name = "corecode/subject_list.html"
+class CourseListView(LoginRequiredMixin, SuccessMessageMixin, ListView):
+    model = Course
+    template_name = "corecode/course_list.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["form"] = SubjectForm()
+        context["form"] = CourseForm()
         return context
 
 
-class SubjectCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
-    model = Subject
-    form_class = SubjectForm
+class CourseCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    model = Course
+    form_class = CourseForm
     template_name = "corecode/mgt_form.html"
-    success_url = reverse_lazy("subjects")
-    success_message = "New subject successfully added"
+    success_url = reverse_lazy("courses")
+    success_message = "New course successfully added"
 
 
-class SubjectUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
-    model = Subject
+class CourseUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = Course
     fields = ["name"]
-    success_url = reverse_lazy("subjects")
-    success_message = "Subject successfully updated."
+    success_url = reverse_lazy("courses")
+    success_message = "Course successfully updated."
     template_name = "corecode/mgt_form.html"
 
 
-class SubjectDeleteView(LoginRequiredMixin, DeleteView):
-    model = Subject
-    success_url = reverse_lazy("subjects")
+class CourseDeleteView(LoginRequiredMixin, DeleteView):
+    model = Course
+    success_url = reverse_lazy("courses")
     template_name = "corecode/core_confirm_delete.html"
-    success_message = "The subject {} has been deleted with all its attached content"
+    success_message = "The course {} has been deleted with all its attached content"
 
     def delete(self, request, *args, **kwargs):
         obj = self.get_object()
         messages.success(self.request, self.success_message.format(obj.name))
-        return super(SubjectDeleteView, self).delete(request, *args, **kwargs)
+        return super(CourseDeleteView, self).delete(request, *args, **kwargs)
 
 
 class CurrentSessionAndTermView(LoginRequiredMixin, View):

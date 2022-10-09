@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ("students", "0001_initial"),
+        ("subjects", "0001_initial"),
         ("corecode", "0001_initial"),
     ]
 
@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
                     "current_class",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        to="corecode.StudentClass",
+                        to="corecode.SubjectClass",
                     ),
                 ),
                 (
@@ -43,17 +43,17 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "student",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="students.Student",
-                    ),
-                ),
-                (
                     "subject",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        to="corecode.Subject",
+                        to="subjects.Subject",
+                    ),
+                ),
+                (
+                    "course",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="corecode.Course",
                     ),
                 ),
                 (
@@ -65,7 +65,7 @@ class Migration(migrations.Migration):
                 ),
             ],
             options={
-                "ordering": ["subject"],
+                "ordering": ["course"],
             },
         ),
     ]

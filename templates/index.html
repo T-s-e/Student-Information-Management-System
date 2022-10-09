@@ -1,7 +1,27 @@
 {% extends 'base.html' %}
 
+{% block title %}Home{% endblock title %}
+
+{% block content-header %}
+  <div class="card-header">
+    <h1 class="card-title">
+      通知公告：
+    </h1>
+    <div class="card-tools">
+      <p class="small btn btn-tool">华中科技大学本科生院</p>
+    </div>
+  </div>
+{% endblock content-header %}
 
 {% block content %}
-  <p>Dashboard contents and design coming soon.</p>
-  <p> Use the sidebar menu for now!</p>
+  <ul>             
+      {% for item in result %}
+        <li>
+          <div class="bt">
+            <span class="fr">{{ item.time }} - </span>
+            <a href={{ item.link }}>{{ item.title }}</a>
+          </div>
+        </li>
+      {% endfor %}
+  </ul>
 {% endblock content %}
