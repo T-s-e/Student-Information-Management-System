@@ -6,8 +6,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import HttpResponseRedirect, redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, TemplateView, View
+from django.views.generic import ListView, View
+from django.views.generic.base import TemplateResponseMixin, ContextMixin
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+import requests
+from bs4 import BeautifulSoup
 
 
 from .forms import (
@@ -26,8 +29,55 @@ from .models import (
     Course,
 )
 
+class Result(object):
+    def __init__(self, time, title, link):
+        self.time = time
+        self.title = title
+        self.link = link
 
-class IndexView(LoginRequiredMixin, TemplateView):
+def get_data():
+    html = requests.get("http://ugs.hust.edu.cn")
+    results = []
+    if html.status_code == 200:
+        html.encoding = 'utf-8'
+
+        soup = BeautifulSoup(html.text, 'html.parser')
+        # 复制a标签的selector，并更换为统一格式
+        data = soup.select('body > div.main1 > div > div.xwdt.fl > ul > li')
+        
+        # # 清空test.txt内容
+        # f = open(output, 'w')
+        # f.truncate()
+
+        for item in data:
+            
+            title = item.find('a').get_text()
+            # print(title)
+            time = item.find('span').get_text()
+            link = 'http://ugs.hust.edu.cn/' + item.find('a').get('href')
+            result = Result(time=time, title=title, link=link)
+            # 'ID': re.findall('\d+', item.get('href'))
+            results.append(result)
+        
+            # with open(output, encoding='utf-8', mode='a') as f:
+            #     f.write(str(result)+'\n')
+    return results
+
+class Template_View(TemplateResponseMixin, ContextMixin, View):
+    """
+    Render a template. Pass keyword arguments from the URLconf to the context.
+    """
+    def get(self, request, *args, **kwargs):
+        result = get_data()
+        # context = self.get_context_data(**kwargs)
+        context = {
+            'result': result
+        }
+
+        return self.render_to_response(context)
+
+
+class IndexView(LoginRequiredMixin, Template_View):
     template_name = "index.html"
 
 
