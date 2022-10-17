@@ -81,6 +81,6 @@ def delete_csv_file(sender, instance, *args, **kwargs):
 
 
 @receiver(post_delete, sender=Subject)
-def delete_passport_on_delete(sender, instance, *args, **kwargs):
-    if instance.passport:
-        _delete_file(instance.passport.path)
+def delete_picture_on_delete(sender, instance, *args, **kwargs):
+    if instance.picture:
+        _delete_file(instance.picture.path)
