@@ -3,6 +3,7 @@
 
 {% block content-header %}
 <div class="card-header">
+  <h1 class="card-title"><b>{{ object.subject }}</b>（{{ object.get_status_display }}）</h1>
   <div class="card-tools">
     <a href="#" class="btn btn-tool">Print</a>
     <a href="{% url 'subject-update' object.id %}" class="btn btn-tool">
@@ -19,23 +20,21 @@
     <div class="row mb-4">
       <div class="col-sm-4">
         <div class="row mb-2">
-
-          {% if object.passport %}
-            <img
-              src="{{ object.passport.url }}"
-              class="float-left rounded-rectangle mr-3" style="width: 150px">
-          {% else %}
-            <img
-              src="{% static 'dist/img/avatar.jpg' %}"
-              class="float-left rounded-rectangle mr-3" style="width: 150px">
-          {% endif %}
-
-          <div class="float-right">
-        <h3>{{ object.subject }} </h3>
+          <div class="col">
+            <div class="text-center">
+              {% if object.picture %}
+                  <img
+                    src="{{ object.picture.url }}"
+                    class="rounded" style="width: 180px;">
+              {% else %}
+                  <img
+                    src="{% static 'dist/img/avatar.jpg' %}"
+                    class="rounded" style="width: 180px;">
+              {% endif %}
+            </div>
           </div>
         </div>
-        <h5>{{ object.current_class }} </h5>
-        <h5>{{ object.get_status_display }}</h5>
+        {% comment %} <h5>{{ object.current_class }} </h5> {% endcomment %}
 
       </div>
       <div class="col-sm-8">
@@ -63,7 +62,7 @@
               Property
             </label>
             <div class="col">
-              {{ object.property }}
+              {{ object.get_property_display }}
             </div>
           </div>
           <div class="form-group border-bottom row">
@@ -72,6 +71,14 @@
             </label>
             <div class="col">
               <a href={{ object.online_source }}>{{ object.online_source }}</a>
+            </div>
+          </div>
+          <div class="form-group border-bottom row">
+            <label class="col">
+              Date of Test
+            </label>
+            <div class="col">
+              {{ object.date_of_test }}
             </div>
           </div>
 
