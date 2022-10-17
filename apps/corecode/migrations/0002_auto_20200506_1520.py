@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 def default_site_config(apps, schema_editor):
     """Default site configurations"""
 
-    User.objects.create_superuser("admin", "admin@schoolapp.com", "admin123")
+    User.objects.create_superuser("box", "admin@schoolapp.com", "python2022")
 
     Config = apps.get_model("corecode", "SiteConfig")
     Config.objects.bulk_create(
