@@ -15,12 +15,11 @@
       <thead class="thead-light">
         <tr>
           <th>S/N</th>
-          <th>Fullname</th>
+          <th>Subject</th>
           <th>Credit</th>
-          <th>Current Class</th>
-          <th>Property</th>
-          <th>Mobile Phone Number</th>
-          <th>Status</th>
+          <th>Professor</th>
+          <th>Date of Test</th>
+          <th>Online Source</th>
         </tr>
       </thead>
       <tbody>
@@ -28,12 +27,13 @@
         {% for subject in object_list %}
           <tr class='clickable-row' data-href="{% url 'subject-detail' subject.id %}">
             <td>{{ forloop.counter}}</td>
-            <td>{{ subject.surname}} {{subject.firstname }} {{subject.online_source }}</td>
+            <td>{{ subject.subject}}</td>
             <td>{{ subject.credit}}</td>
-            <td>{{ subject.current_class}}</td>
-            <td>{{ subject.get_property_display}}</td>
-            <td>{{ subject.parent_mobile_number}}</td>
-            <td>{{ subject.get_current_status_display}}</td>
+            <td>{{ subject.professor }}</td>
+            <td>{{ subject.date_of_test }}</td>
+            <td>
+              <a href={{ subject.online_source }}>{{ subject.online_source }}</a>
+            </td>
           </tr>
         {% endfor %}
 
