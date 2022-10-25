@@ -27,12 +27,11 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("balance_from_previous_term", models.IntegerField(default=0)),
                 (
                     "status",
                     models.CharField(
-                        choices=[("active", "Active"), ("closed", "Closed")],
-                        default="active",
+                        choices=[("已完成", "已完成"), ("未完成", "未完成")],
+                        default="未完成",
                         max_length=20,
                     ),
                 ),
@@ -69,30 +68,7 @@ class Migration(migrations.Migration):
                 "ordering": ["subject", "term"],
             },
         ),
-        migrations.CreateModel(
-            name="Receipt",
-            fields=[
-                (
-                    "id",
-                    models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                ("amount_paid", models.IntegerField()),
-                ("date_paid", models.DateField(default=django.utils.timezone.now)),
-                ("comment", models.CharField(blank=True, max_length=200)),
-                (
-                    "invoice",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="finance.Invoice",
-                    ),
-                ),
-            ],
-        ),
+
         migrations.CreateModel(
             name="InvoiceItem",
             fields=[
@@ -105,8 +81,8 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("description", models.CharField(max_length=200)),
-                ("amount", models.IntegerField()),
+                ("description", models.CharField(max_length=2000)),
+                ("amount", models.CharField(max_length=2000)),
                 (
                     "invoice",
                     models.ForeignKey(
