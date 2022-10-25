@@ -27,18 +27,16 @@
     <h5>{{ object.class_for }} </h5>
     <h6>Status: {{ object.get_status_display }} </h6>
     <hr>
-    <div>
-      <h4>Expected Balance: {{ object.balance | intcomma }}</h4>
-    </div>
+
   </div>
   <div class="col-sm-8">
     <table class="table table-sm table-bordered">
-      Invoice Breakdown</br>
+      待办列表</br>
       <thead class="thead-light">
         <tr>
           <th>S/N</th>
-          <th>Description</th>
-          <th>Amount</th>
+          <th>具体内容</th>
+          <th>截止日期</th>
         </tr>
       </thead>
       <tbody>
@@ -51,26 +49,6 @@
         {% endfor %}
       </tbody>
       <tfoot>
-        <tr>
-          <td></td>
-          <td>Total Amount this term</td>
-          <td>{{ object.amount_payable | intcomma}}</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>Balance from previous term</td>
-          <td>{{ object.balance_from_previous_term | intcomma }}</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>Total Amount Payable</td>
-          <td>{{ object.total_amount_payable | intcomma}}</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>Total Amount Paid</td>
-          <td>{{ object.total_amount_paid | intcomma}}</td>
-        </tr>
 
       </tfoot>
     </table>
@@ -79,27 +57,8 @@
 
 <hr>
 
-<h5>Payment History</h5>
-<table class="table table-bordered table-sm">
-  <thead class="thead-light">
-    <tr>
-      <th>S/N</th>
-      <th>Amount Paid</th>
-      <th>Date Paid</th>
-      <th>Comment Paid</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for receipt in receipts %}
-    <tr>
-      <td>{{ forloop.counter }}</td>
-      <td>{{ receipt.amount_paid}}</td>
-      <td>{{ receipt.date_paid}}</td>
-      <td>{{ receipt.comment}}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+
+
 
 
 {% endblock content %}
