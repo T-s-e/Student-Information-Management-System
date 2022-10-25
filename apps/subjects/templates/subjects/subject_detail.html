@@ -87,24 +87,22 @@
       </div>
     </div>
 
-    <h4>Invoice/Payment History</h4>
+    <h4>课程相关日程管理</h4>
     {% if payments %}
       <table class="table table-sm table-bordered table-hover">
         <thead class="thead-light">
           <tr>
             <th>For</th>
-            <th>Amount Payable</th>
-            <th>Amount Paid</th>
-            <th>balance</th>
+            <th>待办</th>
+            <th>截止日期</th>
           </tr>
         </thead>
         <tbody>
           {% for payment in payments %}
             <tr class='clickable-row' data-href="{% url 'invoice-detail' payment.id %}">
               <td>{{payment.session}} - {{payment.term}} - {{ payment.class_for}}</td>
-              <td>{{payment.total_amount_payable}}</td>
-              <td>{{payment.total_amount_paid}}</td>
-              <td>{{payment.balance}}</td>
+              <td>{{item.description}}</td>
+              <td>{{item.amount}}</td>
             </tr>
           {% endfor %}
         </tbody>
