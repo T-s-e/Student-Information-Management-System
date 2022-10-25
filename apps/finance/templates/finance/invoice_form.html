@@ -7,7 +7,7 @@
 {% if object %}
 Update invoice {{ object }}
 {% else %}
-Add new invoice
+添加新日程
 {% endif %}
 
 {% endblock title %}
@@ -39,10 +39,10 @@ Add new invoice
     </div>
     <div class="col-sm-6 callout callout-info">
       {{ items.management_form }}
-      <div class="text-center">FEE STRUCTURE</div>
+      <div class="text-center">待办事项</div>
       <div class="row">
-        <div class="col"><strong>Fee Type</strong></div>
-        <div class="col"><strong>Amount</strong></div>
+        <div class="col"><strong>具体内容</strong></div>
+        <div class="col"><strong>截止日期</strong></div>
       </div>
       {% for item in items %}
       <div class="form-group row items-group">
@@ -56,37 +56,9 @@ Add new invoice
 
 
   {% if object %}
-    <h4>RECEIPTS</h4>
-    <table class="table table-sm">
-      {{ receipts.management_form }}
-      <thead class="thead-light">
-        <tr>
-          <th>Amount Paid</th>
-          <th>Date Paid</th>
-          <th>Comment</th>
-          <th><i class="fa fa-trash"></i></th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for receipt in receipts %}
-        {% for hidden in receipt.hidden_fields %}
-        {{ hidden }}
-        {% endfor %}
-        <tr>
-          {% for field in receipt.visible_fields %}
-          <td>{{ field | add_class:"form-control form-control-sm"}}</td>
-          {% endfor %}
-        </tr>
-        {% endfor %}
-
-      </tbody>
-    </table>
-  {% endif %}
-
-  {% if object %}
   <input type="submit" class="btn btn-primary" value="Update Record">
   {% else %}
-  <input type="submit" class="btn btn-primary" value="Add new invoice">
+  <input type="submit" class="btn btn-primary" value="确认添加该日程">
   {% endif %}
 </form>
 
