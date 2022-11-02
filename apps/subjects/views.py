@@ -54,7 +54,7 @@ class SubjectUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         # form.fields["date_of_admission"].widget = widgets.DateInput(
         #     attrs={"type": "date"}
         # )
-        form.fields["address"].widget = widgets.Textarea(attrs={"rows": 2})
+        # form.fields["address"].widget = widgets.Textarea(attrs={"rows": 2})
         form.fields["others"].widget = widgets.Textarea(attrs={"rows": 2})
         # form.fields['picture'].widget = widgets.FileInput()
         return form

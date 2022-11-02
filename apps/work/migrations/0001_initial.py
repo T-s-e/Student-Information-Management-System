@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="Staff",
+            name="Work",
             fields=[
                 (
                     "id",
@@ -24,30 +24,30 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "current_status",
+                    "current_method",
                     models.CharField(
-                        choices=[("active", "Active"), ("inactive", "Inactive")],
-                        default="active",
+                        choices=[("private", "个人"), ("collaboration", "协作")],
+                        default="private",
                         max_length=10,
                     ),
                 ),
-                ("surname", models.CharField(max_length=200)),
+                ("name", models.CharField(max_length=200)),
                 ("firstname", models.CharField(max_length=200)),
                 ("other_name", models.CharField(blank=True, max_length=200)),
                 (
-                    "gender",
+                    "priority",
                     models.CharField(
-                        choices=[("male", "Male"), ("female", "Female")],
-                        default="male",
-                        max_length=10,
+                        choices=[("!", "较低"), ("!!", "一般"), ("!!!", "较高")],
+                        default="!",
+                        max_length=15,
                     ),
                 ),
                 ("date_of_birth", models.DateField(default=django.utils.timezone.now)),
                 (
-                    "date_of_admission",
+                    "date",
                     models.DateField(default=django.utils.timezone.now),
                 ),
-                ("mobile_number", models.CharField(blank=True, max_length=15)),
+                ("note", models.CharField(blank=True, max_length=200)),
                 ("address", models.TextField(blank=True)),
                 ("others", models.TextField(blank=True)),
             ],

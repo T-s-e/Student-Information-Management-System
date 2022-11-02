@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "widget_tweaks",
     "apps.corecode",
     "apps.subjects",
-    "apps.staffs",
+    "apps.work",
     "apps.finance",
     "apps.result",
 ]

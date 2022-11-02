@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}work{% endblock title %}
+
+{% block breadcrumb %}
+<a class="btn btn-primary" href="{% url 'work-create' %}"><i
+    class="fas fa-plus"></i> New work</a>
+{% endblock breadcrumb %}
+
+{% block content %}
+  <table id="worktable" class="table table-bordered table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th>S/N</th>
+        <th>Name</th>
+        <th>Priority</th>
+        <th>Method</th>
+        <th>Period</th>
+        <th>Note</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      {% for work in object_list %}
+        <tr class='clickable-row' data-href="{% url 'work-detail' work.id %}">
+          <td>{{ forloop.counter}}</td>
+          <td>{{ work.name}}</td>
+          <td>{{ work.get_priority_display}}</td>
+          <td>{{ work.get_current_method_display}}</td>
+          <td>{{ work.period}}</td>
+          <td>{{ work.note}}</td>
+        </tr>
+      {% endfor %}
+
+    </tbody>
+  </table>
+{% endblock content %}
+
+
+{% block morejs %}
+<script>
+   $('#worktable').DataTable({
+    select: false
+    });
+</script>
+
+{% endblock morejs %}
