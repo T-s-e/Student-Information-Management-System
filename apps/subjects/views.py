@@ -37,7 +37,6 @@ class SubjectCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         """add date picker in forms"""
         form = super(SubjectCreateView, self).get_form()
         form.fields["date_of_test"].widget = widgets.DateInput(attrs={"type": "date"})
-        # form.fields["address"].widget = widgets.Textarea(attrs={"rows": 2})
         form.fields["others"].widget = widgets.Textarea(attrs={"rows": 2})
         return form
 
@@ -51,12 +50,8 @@ class SubjectUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         """add date picker in forms"""
         form = super(SubjectUpdateView, self).get_form()
         form.fields["date_of_test"].widget = widgets.DateInput(attrs={"type": "date"})
-        # form.fields["date_of_admission"].widget = widgets.DateInput(
-        #     attrs={"type": "date"}
-        # )
         form.fields["address"].widget = widgets.Textarea(attrs={"rows": 2})
         form.fields["others"].widget = widgets.Textarea(attrs={"rows": 2})
-        # form.fields['picture'].widget = widgets.FileInput()
         return form
 
 
