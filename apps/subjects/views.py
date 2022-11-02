@@ -86,9 +86,7 @@ class DownloadCSVViewdownloadcsv(LoginRequiredMixin, View):
                 "professor",
                 "online_sources",
                 "property",
-                # "parent_number",
-                # "address",
-                # "current_class",
+
             ]
         )
 
