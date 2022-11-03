@@ -3,40 +3,31 @@
 
 {% block content-header %}
 <div class="card-header">
-  <div class="card-tools">
-    <a href="#" class="btn btn-tool">Print</a>
-    <a href="{% url 'work-update' object.id %}" class="btn btn-tool">
-      <i class="fas fa-edit"></i>
-    </a>
-    <a href="{% url 'work-delete' object.id %}" class="btn btn-tool">
-      <i class="fas fa-times"></i>
-    </a>
-  </div>
+  <h1 class="card-title"><b>{{ object.name }}</b>（{{ object.priority }}）</h1>
 </div>
 {% endblock content-header %}
 
 {% block content %}
-    <div class="row">
+<div class="row mb-4">
       <div class="col-sm-4">
-        <div>
-          <h3>{{ object }} </h3>
-<!--          <h5>{{ object.get_priority_display }} </h5>-->
-<!--          <h5>{{ object.get_current_method_display }} </h5>-->
-<!--          <h5>{{ object.current_class }} </h5>-->
+        <div class="row mb-2">
+          <div class="col">
+          </div>
         </div>
+
       </div>
       <div class="col-sm-8">
         <div>
-          <div class="form-collaboration border-bottom row">
+          <div class="form-group border-bottom row">
             <label class="col">
               Method
             </label>
             <div class="col">
-              {{ object.get_current_method_display }}
+              {{ object.method }}
             </div>
           </div>
 
-          <div class="form-collaboration border-bottom row">
+            <div class="form-group border-bottom row">
             <label class="col">
               Priority
             </label>
@@ -45,7 +36,7 @@
             </div>
           </div>
 
-          <div class="form-collaboration border-bottom row">
+            <div class="form-group border-bottom row">
             <label class="col">
               Period
             </label>
@@ -54,38 +45,19 @@
             </div>
           </div>
 
-          <div class="form-collaboration border-bottom row">
+            <div class="form-group border-bottom row">
             <label class="col">
-               Note
+              Note
             </label>
             <div class="col">
-              {{ object.note}}
+              {{ object.note }}
             </div>
           </div>
-
-<!--          <div class="form-collaboration border-bottom row">-->
-<!--            <label class="col">-->
-<!--              Address-->
-<!--            </label>-->
-<!--            <div class="col">-->
-<!--              {{ object.address }}-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <div class="form-collaboration border-bottom row">-->
-<!--            <label class="col">-->
-<!--              Comments-->
-<!--            </label>-->
-<!--            <div class="col">-->
-<!--              {{ object.others }}-->
-<!--            </div>-->
-<!--          </div>-->
 
         </div>
 
       </div>
     </div>
-
-
 
 
 {% endblock content %}

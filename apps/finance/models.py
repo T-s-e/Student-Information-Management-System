@@ -2,15 +2,15 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 
-from apps.corecode.models import AcademicSession, AcademicTerm, SubjectClass
-from apps.subjects.models import Subject
+from apps.corecode.models import AcademicSession, AcademicTerm, Tag
+from apps.others.models import Item
 
 
 class Invoice(models.Model):
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
     session = models.ForeignKey(AcademicSession, on_delete=models.CASCADE)
     term = models.ForeignKey(AcademicTerm, on_delete=models.CASCADE)
-    class_for = models.ForeignKey(SubjectClass, on_delete=models.CASCADE)
+    class_for = models.ForeignKey(Tag, on_delete=models.CASCADE)
     balance_from_previous_term = models.IntegerField(default=0)
     status = models.CharField(
         max_length=20,
@@ -19,10 +19,10 @@ class Invoice(models.Model):
     )
 
     class Meta:
-        ordering = ["subject", "term"]
+        ordering = ["item", "term"]
 
     def __str__(self):
-        return f"{self.subject}"
+        return f"{self.item}"
 
     def balance(self):
         payable = self.total_amount_payable()

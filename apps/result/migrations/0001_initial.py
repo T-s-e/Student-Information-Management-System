@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
                     "current_class",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        to="corecode.SubjectClass",
+                        to="corecode.Tag",
                     ),
                 ),
                 (

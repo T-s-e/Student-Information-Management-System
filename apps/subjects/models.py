@@ -4,7 +4,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 
-from apps.corecode.models import SubjectClass
+from apps.corecode.models import Tag
 
 
 class Subject(models.Model):
@@ -24,7 +24,7 @@ class Subject(models.Model):
     property = models.CharField(max_length=10, choices=PROPERTY_CHOICES, default="必修")
     date_of_test = models.DateField(default=timezone.now)
     # current_class = models.ForeignKey(
-    #     SubjectClass, on_delete=models.SET_NULL, blank=True, null=True
+    #     Tag, on_delete=models.SET_NULL, blank=True, null=True
     # )
     # date_of_admission = models.DateField(default=timezone.now)
 

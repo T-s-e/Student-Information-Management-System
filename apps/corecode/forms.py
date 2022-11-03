@@ -5,7 +5,7 @@ from .models import (
     AcademicSession,
     AcademicTerm,
     SiteConfig,
-    SubjectClass,
+    Tag,
     Course,
 )
 
@@ -43,11 +43,11 @@ class CourseForm(ModelForm):
         fields = ["name"]
 
 
-class SubjectClassForm(ModelForm):
+class TagForm(ModelForm):
     prefix = "Class"
 
     class Meta:
-        model = SubjectClass
+        model = Tag
         fields = ["name"]
 
 

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Others{% endblock title %}
+
+{% block breadcrumb %}
+<a class="btn btn-primary" href="{% url 'item-create' %}"><i
+    class="fas fa-plus"></i> New item</a>
+{% endblock breadcrumb %}
+
+{% block content %}
+  <div class="table-responsive">
+    <table id="itemtable" class="table table-bordered table-hover" data-page-length='100'>
+      <thead class="thead-light">
+        <tr>
+          <th>S/N</th>
+          <th>Item</th>
+          <th>Priority</th>
+          <th>Tag</th>
+          <th>Date</th>
+          <th>Period</th>
+          <th>Note</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for item in object_list %}
+          <tr class='clickable-row' data-href="{% url 'item-detail' item.id %}">
+            <td>{{ forloop.counter}}</td>
+            <td>{{ item.item}}</td>
+            <td>{{ item.priority}}</td>
+            <td>{{ item.tag }}</td>
+            <td>{{ item.date }}</td>
+            <td>{{ item.period}}</td>
+            <td>{{ item.note}}</td>
+          </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+{% endblock content %}
+
+
+{% block morejs %}
+<script>
+  $('#itemtable').DataTable({
+  });
+</script>
+
+{% endblock morejs %}

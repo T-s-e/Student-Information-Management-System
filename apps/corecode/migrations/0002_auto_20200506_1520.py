@@ -42,11 +42,11 @@ def default_site_config(apps, schema_editor):
         ]
     )
 
-    SubjectClass = apps.get_model("corecode", "SubjectClass")
-    SubjectClass.objects.bulk_create(
+    Tag = apps.get_model("corecode", "Tag")
+    Tag.objects.bulk_create(
         [
-            SubjectClass(name="JSS 1"),
-            SubjectClass(name="JSS 2"),
+            Tag(name="Life"),
+            Tag(name="Hobby"),
         ]
     )
 

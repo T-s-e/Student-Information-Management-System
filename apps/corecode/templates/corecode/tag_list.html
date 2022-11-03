@@ -3,14 +3,14 @@
 
 
 {% block title %}
-Classes
+Tags
 {% endblock title %}
 
 
 {% block breadcrumb %}
   <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#modal1">
     <i class="fa fa-plus"></i>
-    Add new class
+    Add new tag
   </a>
 {% endblock breadcrumb %}
   
@@ -24,9 +24,9 @@ Classes
             {% for object in object_list %}
             <tr>
               <td>{{ object }}</td>
-              <td><a href="{% url 'class-update' object.id %}"><i
+              <td><a href="{% url 'tag-update' object.id %}"><i
                     class="fa fa-edit"></i></a> <a
-                  href="{% url 'class-delete' object.id %}"><i
+                  href="{% url 'tag-delete' object.id %}"><i
                     class="fa fa-trash-alt"></i></a></td>
             </tr>
             {% endfor %}
@@ -40,7 +40,7 @@ Classes
   <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form action="{% url 'class-create' %}" method="POST">
+        <form action="{% url 'tag-create' %}" method="POST">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Add new class</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">

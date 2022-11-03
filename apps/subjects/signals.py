@@ -5,7 +5,7 @@ from io import StringIO
 from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 
-from apps.corecode.models import SubjectClass
+from apps.corecode.models import Tag
 
 from .models import Subject, SubjectBulkUpload
 
@@ -43,7 +43,7 @@ def create_bulk_subject(sender, created, instance, *args, **kwargs):
                     else ""
                 )
                 if current_class:
-                    theclass, kind = SubjectClass.objects.get_or_create(
+                    theclass, kind = Tag.objects.get_or_create(
                         name=current_class
                     )
 

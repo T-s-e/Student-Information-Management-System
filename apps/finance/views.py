@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
-from apps.subjects.models import Subject
+from apps.others.models import Item
 
 from .forms import InvoiceItemFormset, InvoiceReceiptFormSet, Invoices
 from .models import Invoice, InvoiceItem, Receipt
@@ -54,7 +54,7 @@ class InvoiceDetailView(LoginRequiredMixin, DetailView):
 
 class InvoiceUpdateView(LoginRequiredMixin, UpdateView):
     model = Invoice
-    fields = ["subject", "session", "term", "class_for", "balance_from_previous_term"]
+    fields = ["item", "session", "term", "class_for", "balance_from_previous_term"]
 
     def get_context_data(self, **kwargs):
         context = super(InvoiceUpdateView, self).get_context_data(**kwargs)

@@ -3,7 +3,7 @@ from django.db import models
 from apps.corecode.models import (
     AcademicSession,
     AcademicTerm,
-    SubjectClass,
+    Tag,
     Course,
 )
 from apps.subjects.models import Subject
@@ -16,7 +16,7 @@ class Result(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     session = models.ForeignKey(AcademicSession, on_delete=models.CASCADE)
     term = models.ForeignKey(AcademicTerm, on_delete=models.CASCADE)
-    current_class = models.ForeignKey(SubjectClass, on_delete=models.CASCADE)
+    current_class = models.ForeignKey(Tag, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     test_score = models.IntegerField(default=0)
     exam_score = models.IntegerField(default=0)

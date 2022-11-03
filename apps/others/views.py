@@ -1,5 +1,3 @@
-import csv
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.forms import widgets
@@ -10,86 +8,59 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from apps.finance.models import Invoice
 
-from .models import Other, OtherBulkUpload
+from .models import Item
 
 
-class OtherListView(LoginRequiredMixin, ListView):
-    model = Other
-    template_name = "others/other_list.html"
+class ItemListView(LoginRequiredMixin, ListView):
+    model = Item
+    template_name = "items/item_list.html"
 
 
-class OtherDetailView(LoginRequiredMixin, DetailView):
-    model = Other
-    template_name = "others/other_detail.html"
+class ItemDetailView(LoginRequiredMixin, DetailView):
+    model = Item
+    template_name = "items/item_detail.html"
 
     def get_context_data(self, **kwargs):
-        context = super(OtherDetailView, self).get_context_data(**kwargs)
-        context["payments"] = Invoice.objects.filter(other=self.object)
+        context = super(ItemDetailView, self).get_context_data(**kwargs)
+        context["payments"] = Invoice.objects.filter(item=self.object)
         return context
 
 
-class OtherCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
-    model = Other
+class ItemCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    model = Item
     fields = "__all__"
     success_message = "New item successfully added."
+    template_name = "items/item_form.html"
+
 
     def get_form(self):
         """add date picker in forms"""
-        form = super(OtherCreateView, self).get_form()
-        form.fields["date_of_test"].widget = widgets.DateInput(attrs={"type": "date"})
+        form = super(ItemCreateView, self).get_form()
+        form.fields["date"].widget = widgets.DateInput(attrs={"type": "date"})
         # form.fields["address"].widget = widgets.Textarea(attrs={"rows": 2})
-        form.fields["others"].widget = widgets.Textarea(attrs={"rows": 2})
+        form.fields["note"].widget = widgets.Textarea(attrs={"rows": 2})
         return form
 
 
-class OtherUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
-    model = Other
+class ItemUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = Item
     fields = "__all__"
     success_message = "Record successfully updated."
 
     def get_form(self):
         """add date picker in forms"""
-        form = super(OtherUpdateView, self).get_form()
-        form.fields["date_of_test"].widget = widgets.DateInput(attrs={"type": "date"})
+        form = super(ItemUpdateView, self).get_form()
+        form.fields["date"].widget = widgets.DateInput(attrs={"type": "date"})
         # form.fields["date_of_admission"].widget = widgets.DateInput(
         #     attrs={"type": "date"}
         # )
         # form.fields["address"].widget = widgets.Textarea(attrs={"rows": 2})
-        form.fields["others"].widget = widgets.Textarea(attrs={"rows": 2})
+        form.fields["note"].widget = widgets.Textarea(attrs={"rows": 2})
         # form.fields['picture'].widget = widgets.FileInput()
         return form
 
 
-class OtherDeleteView(LoginRequiredMixin, DeleteView):
-    model = Other
-    success_url = reverse_lazy("other-list")
+class ItemDeleteView(LoginRequiredMixin, DeleteView):
+    model = Item
+    success_url = reverse_lazy("item-list")
 
-
-class OtherBulkUploadView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
-    model = OtherBulkUpload
-    template_name = "others/others_upload.html"
-    fields = ["csv_file"]
-    success_url = "/other/list"
-    success_message = "Successfully uploaded items"
-
-
-class DownloadCSVViewdownloadcsv(LoginRequiredMixin, View):
-    def get(self, request, *args, **kwargs):
-        response = HttpResponse(content_type="text/csv")
-        response["Content-Disposition"] = 'attachment; filename="other_template.csv"'
-
-        writer = csv.writer(response)
-        writer.writerow(
-            [
-                "credit",
-                "surname",
-                "professor",
-                "online_sources",
-                "property",
-                # "parent_number",
-                # "address",
-                # "current_class",
-            ]
-        )
-
-        return response

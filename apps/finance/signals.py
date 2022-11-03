@@ -8,12 +8,12 @@ from .models import Invoice
 def after_creating_invoice(sender, instance, created, **kwargs):
     if created:
         previous_inv = (
-            Invoice.objects.filter(subject=instance.subject)
+            Invoice.objects.filter(item=instance.item)
             .exclude(id=instance.id)
             .last()
         )
         if previous_inv:
-            previous_inv.status = "closed"
+            previous_inv.priority = "closed"
             previous_inv.save()
             instance.balance_from_previous_term = previous_inv.balance()
             instance.save()

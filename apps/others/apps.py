@@ -1,8 +1,5 @@
 from django.apps import AppConfig
 
 
-class OthersConfig(AppConfig):
+class OtherConfig(AppConfig):
     name = "apps.others"
-
-    def ready(self):
-        import apps.others.signals

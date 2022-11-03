@@ -1,10 +1,10 @@
 from django.urls import path
 
 from .views import (
-    ClassCreateView,
-    ClassDeleteView,
-    ClassListView,
-    ClassUpdateView,
+    TagCreateView,
+    TagDeleteView,
+    TagListView,
+    TagUpdateView,
     CurrentSessionAndTermView,
     IndexView,
     SessionCreateView,
@@ -44,10 +44,10 @@ urlpatterns = [
     path("term/create/", TermCreateView.as_view(), name="term-create"),
     path("term/<int:pk>/update/", TermUpdateView.as_view(), name="term-update"),
     path("term/<int:pk>/delete/", TermDeleteView.as_view(), name="term-delete"),
-    path("class/list/", ClassListView.as_view(), name="classes"),
-    path("class/create/", ClassCreateView.as_view(), name="class-create"),
-    path("class/<int:pk>/update/", ClassUpdateView.as_view(), name="class-update"),
-    path("class/<int:pk>/delete/", ClassDeleteView.as_view(), name="class-delete"),
+    path("tag/list/", TagListView.as_view(), name="tags"),
+    path("tag/create/", TagCreateView.as_view(), name="tag-create"),
+    path("tag/<int:pk>/update/", TagUpdateView.as_view(), name="tag-update"),
+    path("tag/<int:pk>/delete/", TagDeleteView.as_view(), name="tag-delete"),
     path("course/list/", CourseListView.as_view(), name="courses"),
     path("course/create/", CourseCreateView.as_view(), name="course-create"),
     path(

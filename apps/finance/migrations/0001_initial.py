@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ("subjects", "0001_initial"),
+        ("others", "0001_initial"),
         ("corecode", "0001_initial"),
     ]
 
@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
                     "class_for",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        to="corecode.SubjectClass",
+                        to="corecode.Tag",
                     ),
                 ),
                 (
@@ -51,10 +51,10 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "subject",
+                    "item",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        to="subjects.Subject",
+                        to="others.Item",
                     ),
                 ),
                 (
@@ -66,7 +66,7 @@ class Migration(migrations.Migration):
                 ),
             ],
             options={
-                "ordering": ["subject", "term"],
+                "ordering": ["item", "term"],
             },
         ),
         migrations.CreateModel(

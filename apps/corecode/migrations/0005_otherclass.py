@@ -10,16 +10,4 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='OtherClass',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=200, unique=True)),
-            ],
-            options={
-                'verbose_name': 'Class',
-                'verbose_name_plural': 'Classes',
-                'ordering': ['name'],
-            },
-        ),
     ]

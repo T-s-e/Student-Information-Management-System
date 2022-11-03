@@ -4,51 +4,33 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 
-from apps.corecode.models import OtherClass
+from apps.corecode.models import Tag
 
 
-class Other(models.Model):
-    STATUS_CHOICES = [("active", "Active"), ("inactive", "Inactive")]
-
-    PROPERTY_CHOICES = [("compulsory", "必修"), ("optional", "选修")]
-
-
-    status = models.CharField(
-        max_length=10, choices=STATUS_CHOICES, default="active"
-    )
-    credit = models.CharField(max_length=200, unique=True)
+class Item(models.Model):
     item = models.CharField(max_length=200)
-    professor = models.CharField(max_length=200)
-    # online_source = models.CharField(max_length=200, blank=True)
-    online_source = models.URLField(max_length=200)
-    property = models.CharField(max_length=10, choices=PROPERTY_CHOICES, default="必修")
-    date_of_test = models.DateField(default=timezone.now)
-    # current_class = models.ForeignKey(
-    #     SubjectClass, on_delete=models.SET_NULL, blank=True, null=True
-    # )
-    # date_of_admission = models.DateField(default=timezone.now)
 
-    # mobile_num_regex = RegexValidator(
-    #     regex="^[0-9]{10,15}$", message="Entered mobile number isn't in a right format!"
-    # )
-    # parent_mobile_number = models.CharField(
-    #     validators=[mobile_num_regex], max_length=13, blank=True
-    # )
+    PRIORITY_CHOICES = [("---------", "---------"), ("!", "较低"), ("!!", "一般"), ("!!!", "较高")]
 
-    # address = models.TextField(blank=True)
-    others = models.TextField(blank=True)
-    picture = models.ImageField(blank=True, upload_to="others/pictures/")
+    priority = models.CharField(
+        max_length=15, choices=PRIORITY_CHOICES, default="----"
+    )
+
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+
+    date = models.DateField(default=timezone.now, blank=True)
+
+    period = models.CharField(max_length=200, blank=True)
+
+    note = models.TextField(blank=True)
 
     class Meta:
-        ordering = ["item", "professor", "online_source"]
+        ordering = ["item", "priority", "tag"]
 
     def __str__(self):
-        return f"{self.item} {self.professor} {self.online_source} ({self.credit})"
+        return f"{self.item} {self.priority} {self.tag}"
 
     def get_absolute_url(self):
-        return reverse("other-detail", kwargs={"pk": self.pk})
+        return reverse("item-detail", kwargs={"pk": self.pk})
 
 
-class OtherBulkUpload(models.Model):
-    date_uploaded = models.DateTimeField(auto_now=True)
-    csv_file = models.FileField(upload_to="others/bulkupload/")
