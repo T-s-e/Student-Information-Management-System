@@ -45,8 +45,8 @@ def default_site_config(apps, schema_editor):
     Tag = apps.get_model("corecode", "Tag")
     Tag.objects.bulk_create(
         [
-            Tag(name="JSS 1"),
-            Tag(name="JSS 2"),
+            Tag(name="Life"),
+            Tag(name="Hobby"),
         ]
     )
 
