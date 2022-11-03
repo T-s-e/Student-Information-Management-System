@@ -16,7 +16,7 @@ class Item(models.Model):
         max_length=15, choices=PRIORITY_CHOICES, default="----"
     )
 
-    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    tag = models.ForeignKey(Tag, on_delete=models.SET_NULL, blank=True, null=True)
 
     date = models.DateField(default=timezone.now, blank=True)
 

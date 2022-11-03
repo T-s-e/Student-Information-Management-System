@@ -79,8 +79,8 @@ class Migration(migrations.Migration):
                 ("name", models.CharField(max_length=200, unique=True)),
             ],
             options={
-                "verbose_name": "Class",
-                "verbose_name_plural": "Classes",
+                "verbose_name": "Tag",
+                "verbose_name_plural": "Tags",
                 "ordering": ["name"],
             },
         ),

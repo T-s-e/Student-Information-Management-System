@@ -16,9 +16,9 @@ class SiteConfigTest(TestCase):
 
 class AcademicSessionTest(TestCase):
     def test_academicsession(self):
-        session = AcademicSession.objects.create(name="test session", current=True)
-        self.assertEqual(str(session), "test session")
 
+        self.assertEqual(str(session), "test session")
+session = AcademicSession.objects.create(name="test session", current=True)
 
 class AcademicTermTest(TestCase):
     def test_academicterm(self):
