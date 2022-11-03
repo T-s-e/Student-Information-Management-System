@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('corecode', '0006_alter_tag_options'),
+        ('corecode', '0007_alter_tag_options'),
     ]
 
     operations = [
