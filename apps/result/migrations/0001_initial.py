@@ -9,25 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('corecode', '0001_initial'),
-        ('subjects', '0001_initial'),
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='Result',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('test_score', models.IntegerField(default=0)),
-                ('exam_score', models.IntegerField(default=0)),
-                ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='corecode.course')),
-                ('current_class', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='corecode.tag')),
-                ('session', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='corecode.academicsession')),
-                ('subject', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='subjects.subject')),
-                ('term', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='corecode.academicterm')),
-            ],
-            options={
-                'ordering': ['course'],
-            },
-        ),
     ]

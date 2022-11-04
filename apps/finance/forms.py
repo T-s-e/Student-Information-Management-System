@@ -1,9 +1,13 @@
 from django.forms import inlineformset_factory, modelformset_factory
 
-from .models import Invoice, InvoiceItem, Receipt
+from .models import Invoice, InvoiceItem, Receipt, InvoiceSubject
 
 InvoiceItemFormset = inlineformset_factory(
     Invoice, InvoiceItem, fields=["description", "amount"], extra=1, can_delete=True
+)
+
+InvoiceSubjectFormset = inlineformset_factory(
+    Invoice, InvoiceSubject, fields=["description", "amount"], extra=1, can_delete=True
 )
 
 InvoiceReceiptFormSet = inlineformset_factory(

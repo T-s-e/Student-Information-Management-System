@@ -4,10 +4,12 @@ from django.utils import timezone
 
 from apps.corecode.models import AcademicSession, AcademicTerm, Tag
 from apps.others.models import Item
+from apps.subjects.models import Subject
 
 
 class Invoice(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     session = models.ForeignKey(AcademicSession, on_delete=models.CASCADE)
     term = models.ForeignKey(AcademicTerm, on_delete=models.CASCADE)
     class_for = models.ForeignKey(Tag, on_delete=models.CASCADE)
@@ -19,10 +21,10 @@ class Invoice(models.Model):
     )
 
     class Meta:
-        ordering = ["item", "term"]
+        ordering = ["item", "term", "subject"]
 
     def __str__(self):
-        return f"{self.item}"
+        return f"{self.item} {self.subject}"
 
     def balance(self):
         payable = self.total_amount_payable()
@@ -51,6 +53,12 @@ class Invoice(models.Model):
 
 
 class InvoiceItem(models.Model):
+    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
+    description = models.CharField(max_length=200)
+    amount = models.IntegerField()
+
+
+class InvoiceSubject(models.Model):
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
     description = models.CharField(max_length=200)
     amount = models.IntegerField()

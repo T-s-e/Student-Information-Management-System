@@ -6,9 +6,10 @@ from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from apps.others.models import Item
+from apps.subjects.models import Subject
 
-from .forms import InvoiceItemFormset, InvoiceReceiptFormSet, Invoices
-from .models import Invoice, InvoiceItem, Receipt
+from .forms import InvoiceItemFormset,InvoiceSubject, InvoiceReceiptFormSet,InvoiceSubjectFormset, Invoices
+from .models import Invoice, InvoiceItem,InvoiceSubject, Receipt
 
 
 class InvoiceListView(LoginRequiredMixin, ListView):
@@ -26,8 +27,12 @@ class InvoiceCreateView(LoginRequiredMixin, CreateView):
             context["items"] = InvoiceItemFormset(
                 self.request.POST, prefix="invoiceitem_set"
             )
+            context["subjects"] = InvoiceSubjectFormset(
+                self.request.POST, prefix="invoicesubject_set"
+            )
         else:
             context["items"] = InvoiceItemFormset(prefix="invoiceitem_set")
+            context["subjects"] = InvoiceSubjectFormset(prefix="invoicesubject_set")
         return context
 
     def form_valid(self, form):
@@ -38,6 +43,13 @@ class InvoiceCreateView(LoginRequiredMixin, CreateView):
             if form.is_valid() and formset.is_valid():
                 formset.instance = self.object
                 formset.save()
+        #
+        # formset = context["subjects"]
+        # self.object = form.save()
+        # if self.object.id != None:
+        #     if form.is_valid() and formset.is_valid():
+        #         formset.instance = self.object
+        #         formset.save()
         return super().form_valid(form)
 
 
@@ -49,12 +61,13 @@ class InvoiceDetailView(LoginRequiredMixin, DetailView):
         context = super(InvoiceDetailView, self).get_context_data(**kwargs)
         context["receipts"] = Receipt.objects.filter(invoice=self.object)
         context["items"] = InvoiceItem.objects.filter(invoice=self.object)
+        context["subjects"] = InvoiceSubject.objects.filter(invoice=self.object)
         return context
 
 
 class InvoiceUpdateView(LoginRequiredMixin, UpdateView):
     model = Invoice
-    fields = ["item", "session", "term", "class_for", "balance_from_previous_term"]
+    fields = ["item", "session", "term", "class_for", "balance_from_previous_term", "subject"]
 
     def get_context_data(self, **kwargs):
         context = super(InvoiceUpdateView, self).get_context_data(**kwargs)
@@ -65,9 +78,13 @@ class InvoiceUpdateView(LoginRequiredMixin, UpdateView):
             context["items"] = InvoiceItemFormset(
                 self.request.POST, instance=self.object
             )
+            context["subjects"] = InvoiceSubjectFormset(
+                self.request.POST, instance=self.object
+            )
         else:
             context["receipts"] = InvoiceReceiptFormSet(instance=self.object)
             context["items"] = InvoiceItemFormset(instance=self.object)
+            context["subjects"] = InvoiceSubjectFormset(instance=self.object)
         return context
 
     def form_valid(self, form):
