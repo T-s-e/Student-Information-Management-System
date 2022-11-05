@@ -34,14 +34,19 @@ class InvoiceCreateView(LoginRequiredMixin, CreateView):
             context["work"] = InvoiceWorkFormset(
                 self.request.POST, prefix="invoicework_set"
             )
-            context["due_date"] = InvoiceDueDateFormset(
-                self.request.POST, prefix="invoicedue_date_set"
-            )
+            # context["due_date"] = self.request.POST.due_date
+            # context["due_date"].widget = widgets.DateInput(attrs={"type": "date"})
+            # context["due_date"] = InvoiceDueDateFormset(
+            #     self.request.POST, prefix="invoicedue_date_set"
+            # )
         else:
             context["items"] = InvoiceItemFormset(prefix="invoiceitem_set")
             context["subjects"] = InvoiceSubjectFormset(prefix="invoicesubject_set")
             context["work"] = InvoiceWorkFormset(prefix="invoicework_set")
-            context["due_date"] = InvoiceDueDateFormset(prefix="invoicedue_date_set")
+            # context["due_date"].widget = widgets.DateInput(attrs={"type": "date"})
+            # context["due_date"] = InvoiceDueDateFormset(prefix="invoicedue_date_set")
+            # context["due_date"] = self.request.POST.due_date
+
         return context
 
     def form_valid(self, form):
@@ -64,7 +69,7 @@ class InvoiceCreateView(LoginRequiredMixin, CreateView):
 
 class InvoiceDetailView(LoginRequiredMixin, DetailView):
     model = Invoice
-    fields = ["item", "session", "term", "subject", "work"]
+    fields = ["item", "session", "term", "subject", "work", "due_date"]
 
     def get_context_data(self, **kwargs):
         context = super(InvoiceDetailView, self).get_context_data(**kwargs)
@@ -72,13 +77,14 @@ class InvoiceDetailView(LoginRequiredMixin, DetailView):
         context["items"] = InvoiceItem.objects.filter(invoice=self.object)
         context["subjects"] = InvoiceSubject.objects.filter(invoice=self.object)
         context["work"] = InvoiceWork.objects.filter(invoice=self.object)
+        # context["due_date"] = InvoiceDueDate.objects.filter(invoice=self.object)
 
         return context
 
 
 class InvoiceUpdateView(LoginRequiredMixin, UpdateView):
     model = Invoice
-    fields = ["item", "session", "term", "subject", "work"]
+    fields = ["item", "session", "term", "subject", "work", "due_date"]
 
     def get_context_data(self, **kwargs):
         context = super(InvoiceUpdateView, self).get_context_data(**kwargs)
@@ -95,12 +101,15 @@ class InvoiceUpdateView(LoginRequiredMixin, UpdateView):
             context["work"] = InvoiceWorkFormset(
                 self.request.POST, instance=self.object
             )
+            # context["due_date"] = InvoiceDueDateFormset(
+            #     self.request.POST, instance=self.object
+            # )
         else:
             context["receipts"] = InvoiceReceiptFormSet(instance=self.object)
             context["items"] = InvoiceItemFormset(instance=self.object)
             context["subjects"] = InvoiceSubjectFormset(instance=self.object)
             context["work"] = InvoiceWorkFormset(instance=self.object)
-
+            # context["due_date"] = InvoiceDueDateFormset(instance=self.object)
         return context
 
     def form_valid(self, form):

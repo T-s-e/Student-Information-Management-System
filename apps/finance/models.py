@@ -24,10 +24,10 @@ class Invoice(models.Model):
     )
 
     class Meta:
-        ordering = ["subject", "work", "item"]
+        ordering = ["subject", "work", "item", "due_date"]
 
     def __str__(self):
-        return f"{self.subject} {self.work} {self.item}"
+        return f"{self.subject} {self.work} {self.item} {self.due_date}"
 
     def balance(self):
         payable = self.total_amount_payable()

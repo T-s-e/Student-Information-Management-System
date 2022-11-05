@@ -20,51 +20,53 @@
 
   <div class="row">
     <div class="col-sm-6">
-
-      <div class="form-group row">
-        <label class="col col-form-label" for="{{ field.auto_id }}">
-          {{ field.label }}
-          {% for error in field.errors %}
-          <small id="{{ field.auto_id }}" class="text-danger">{{ error }}</small>
-          {% endfor %}
-        </label>
-        <div class="col">
-          {{ field | add_class:"form-control"}}
-          {% if field.help_text %}
-          <small>{{ field.help_text|safe }}</small>
-          {% endif %}
-        </div>
-      </div>
+<!--      <div class="form-group row">-->
+<!--        <label class="col col-form-label" for="{{ field.auto_id }}">-->
+<!--          {{ field.label }}-->
+<!--          {% for error in field.errors %}-->
+<!--          <small class="text-danger">{{ error }}</small>-->
+<!--          {% endfor %}-->
+<!--        </label>-->
+<!--        <div class="col">-->
+<!--          {{ field | add_class:"form-control"}}-->
+<!--          {% if field.help_text %}-->
+<!--          <small>{{ field.help_text|safe }}</small>-->
+<!--          {% endif %}-->
+<!--        </div>-->
+<!--      </div>-->
 
       {% for field in form %}
-      <div class="form-group row">
-        <label class="col col-form-label" for="{{ field.auto_id }}">
-          {{ field.label }}
-          {% for error in field.errors %}
-          <small id="{{ field.auto_id }}" class="text-danger">{{ error }}</small>
-          {% endfor %}
-        </label>
-        <div class="col">
-          {{ field | add_class:"form-control"}}
-          {% if field.help_text %}
-          <small>{{ field.help_text|safe }}</small>
-          {% endif %}
+        <div class="form-group row">
+          <label class="col col-form-label" for="{{ field.auto_id }}">
+            {{ field.label }}
+            {% for error in field.errors %}
+            <small id="{{ field.auto_id }}" class="text-danger">{{ error }}</small>
+            {% endfor %}
+          </label>
+          <div class="col">
+            {% if field.name == 'due_date' %}
+            <input type="date" name="due_date" value="2022-11-05" class="form-control" id="id_due_date">
+  <!--          <input type="hidden" name="initial-due_date" id="initial-id_due_date">-->
+            {% else %}
+            {{ field | add_class:"form-control"}}
+            {% endif %}
+          </div>
         </div>
-      </div>
       {% endfor %}
     </div>
     <div class="col-sm-6 callout callout-info">
       {{ items.management_form }}
-      <div class="text-center">FEE STRUCTURE</div>
+      <h5 class="text-center">待办事项</h5>
+<!--      <div class="text-left">待办事项</div>-->
       <div class="row">
-        <div class="col"><strong>Fee Type</strong></div>
-        <div class="col"><strong>Amount</strong></div>
+        <div class="col"><strong>具体内容</strong></div>
+<!--        <div class="col"><strong>截止日期</strong></div>-->
       </div>
       {% for item in items %}
       <div class="form-group row items-group">
         {{ item.id}}
         <div class="col">{{ item.description | add_class:"form-control"}}</div>
-        <div class="col">{{ item.amount | add_class:"form-control"}}</div>
+<!--        <div class="col">{{ item.amount | add_class:"form-control"}}</div>-->
       </div>
       {% endfor %}
     </div>
@@ -100,9 +102,9 @@
   {% endif %}
 
   {% if object %}
-  <input type="submit" class="btn btn-primary" value="Update Record">
+  <input type="submit" class="btn btn-primary" value="更新该日程">
   {% else %}
-  <input type="submit" class="btn btn-primary" value="Add new invoice">
+  <input type="submit" class="btn btn-primary" value="确认添加该日程">
   {% endif %}
 </form>
 
