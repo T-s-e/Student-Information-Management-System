@@ -4,6 +4,15 @@
 {% block content-header %}
 <div class="card-header">
   <h1 class="card-title"><b>{{ object.name }}</b>（{{ object.priority }}）</h1>
+  <div class="card-tools">
+    <a href="#" class="btn btn-tool">Print</a>
+    <a href="{% url 'work-update' object.id %}" class="btn btn-tool">
+      <i class="fas fa-edit"></i>
+    </a>
+    <a href="{% url 'work-delete' object.id %}" class="btn btn-tool">
+      <i class="fas fa-times"></i>
+    </a>
+  </div>
 </div>
 {% endblock content-header %}
 
@@ -23,7 +32,7 @@
               Method
             </label>
             <div class="col">
-              {{ object.method }}
+              {{ object.get_current_method_display  }}
             </div>
           </div>
 

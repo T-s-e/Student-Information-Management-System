@@ -12,16 +12,16 @@ def default_site_config(apps, schema_editor):
     Config = apps.get_model("corecode", "SiteConfig")
     Config.objects.bulk_create(
         [
-            Config(key="school_name", value="My School"),
-            Config(key="school_slogan", value="A great school"),
-            Config(key="school_address", value="Lagos, Nigeria"),
+            Config(key="school_name", value="HUST"),
+            Config(key="school_slogan", value="在华科的每一步，每一步都算数。"),
+            Config(key="school_address", value="1037号森林"),
         ]
     )
 
     Session = apps.get_model("corecode", "AcademicSession")
     Session.objects.bulk_create(
         [
-            Session(name="2019/2020", current=True),
+            Session(name="2022/2023", current=True),
         ]
     )
 
@@ -30,7 +30,6 @@ def default_site_config(apps, schema_editor):
         [
             Term(name="1st Term", current=True),
             Term(name="2nd Term", current=False),
-            Term(name="3rd Term", current=False),
         ]
     )
 

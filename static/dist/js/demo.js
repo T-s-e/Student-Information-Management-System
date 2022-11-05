@@ -43,20 +43,20 @@
     '<h5>Customize AdminLTE</h5><hr class="mb-2"/>'
   )
 
-  var $no_border_checkbox = $('<input />', {
-    type   : 'checkbox',
-    value  : 1,
-    checked: $('.main-header').hasClass('border-bottom-0'),
-    'class': 'mr-1'
-  }).on('click', function () {
-    if ($(this).is(':checked')) {
-      $('.main-header').addClass('border-bottom-0')
-    } else {
-      $('.main-header').removeClass('border-bottom-0')
-    }
-  })
-  var $no_border_container = $('<div />', {'class': 'mb-1'}).append($no_border_checkbox).append('<span>No Navbar border</span>')
-  $container.append($no_border_container)
+//  var $no_border_checkbox = $('<input />', {
+//    type   : 'checkbox',
+//    value  : 1,
+//    checked: $('.main-header').hasClass('border-bottom-0'),
+//    'class': 'mr-1'
+//  }).on('click', function () {
+//    if ($(this).is(':checked')) {
+//      $('.main-header').addClass('border-bottom-0')
+//    } else {
+//      $('.main-header').removeClass('border-bottom-0')
+//    }
+//  })
+//  var $no_border_container = $('<div />', {'class': 'mb-1'}).append($no_border_checkbox).append('<span>No Navbar border</span>')
+//  $container.append($no_border_container)
 
   var $text_sm_body_checkbox = $('<input />', {
     type   : 'checkbox',
