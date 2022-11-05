@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% load humanize %}
 
-{% block title %}invoices{% endblock title %}
+{% block title %}日程管理{% endblock title %}
 
 {% block breadcrumb %}
 <a class="btn btn-primary" href="{% url 'invoice-create' %}"><i
-    class="fas fa-plus"></i> New Invoice</a>
-<a class="btn btn-primary" href="{% url 'bulk-invoice' %}"><i
-    class="fas fa-upload"></i> Bulk Invoice</a>
+    class="fas fa-plus"></i> 新建日程</a>
+<!--<a class="btn btn-primary" href="{% url 'bulk-invoice' %}"><i-->
+<!--    class="fas fa-upload"></i> 本地上传</a>-->
 {% endblock breadcrumb %}
 
 {% block content %}
@@ -20,7 +20,7 @@
           <th>Session-term</th>
           <th>Total Payable</th>
           <th>Total Paid</th>
-          <th>Balance</th>
+<!--          <th>Balance</th>-->
           <th></th>
         </tr>
       </thead>
@@ -33,7 +33,7 @@
             <td>{{ invoice.session}}-{{ invoice.term}}</td>
             <td>{{ invoice.total_amount_payable | intcomma }}</td>
             <td>{{ invoice.total_amount_paid | intcomma }}</td>
-            <td>{{ invoice.balance | intcomma }}</td>
+<!--            <td>{{ invoice.balance | intcomma }}</td>-->
             <td><a class="btn btn-success btn-sm"
                 href="{% url 'receipt-create' %}?invoice={{ invoice.id }}">Add new
                 receipt</a></td>

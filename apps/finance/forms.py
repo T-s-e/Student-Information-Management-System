@@ -1,6 +1,6 @@
 from django.forms import inlineformset_factory, modelformset_factory
 
-from .models import Invoice, InvoiceItem, Receipt, InvoiceSubject
+from .models import Invoice, InvoiceItem, Receipt, InvoiceSubject, InvoiceDueDate, InvoiceWork
 
 InvoiceItemFormset = inlineformset_factory(
     Invoice, InvoiceItem, fields=["description", "amount"], extra=1, can_delete=True
@@ -8,6 +8,14 @@ InvoiceItemFormset = inlineformset_factory(
 
 InvoiceSubjectFormset = inlineformset_factory(
     Invoice, InvoiceSubject, fields=["description", "amount"], extra=1, can_delete=True
+)
+
+InvoiceDueDateFormset = inlineformset_factory(
+    Invoice, InvoiceDueDate, fields=["due_date"], extra=1, can_delete=True
+)
+
+InvoiceWorkFormset = inlineformset_factory(
+    Invoice, InvoiceWork, fields=["description", "amount"], extra=1, can_delete=True
 )
 
 InvoiceReceiptFormSet = inlineformset_factory(

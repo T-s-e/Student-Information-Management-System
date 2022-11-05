@@ -318,5 +318,4 @@ class CurrentSessionAndTermView(LoginRequiredMixin, View):
             AcademicTerm.objects.filter(name=term).update(current=True)
             AcademicTerm.objects.exclude(name=term).update(current=False)
 
-
         return render(request, self.template_name, {"form": form})

@@ -5,9 +5,9 @@
 {% block title %}
 
 {% if object %}
-Update invoice {{ object }}
+更新日程 {{ object }}
 {% else %}
-Add new invoice
+添加新日程
 {% endif %}
 
 {% endblock title %}
@@ -20,6 +20,22 @@ Add new invoice
 
   <div class="row">
     <div class="col-sm-6">
+
+      <div class="form-group row">
+        <label class="col col-form-label" for="{{ field.auto_id }}">
+          {{ field.label }}
+          {% for error in field.errors %}
+          <small id="{{ field.auto_id }}" class="text-danger">{{ error }}</small>
+          {% endfor %}
+        </label>
+        <div class="col">
+          {{ field | add_class:"form-control"}}
+          {% if field.help_text %}
+          <small>{{ field.help_text|safe }}</small>
+          {% endif %}
+        </div>
+      </div>
+
       {% for field in form %}
       <div class="form-group row">
         <label class="col col-form-label" for="{{ field.auto_id }}">

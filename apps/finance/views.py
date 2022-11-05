@@ -4,12 +4,13 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.forms import widgets
 
 from apps.others.models import Item
 from apps.subjects.models import Subject
 
-from .forms import InvoiceItemFormset,InvoiceSubject, InvoiceReceiptFormSet,InvoiceSubjectFormset, Invoices
-from .models import Invoice, InvoiceItem,InvoiceSubject, Receipt
+from .forms import InvoiceItemFormset, InvoiceSubject,InvoiceItem, InvoiceWork,InvoiceDueDate, InvoiceReceiptFormSet, InvoiceDueDateFormset, InvoiceSubjectFormset, Invoices, InvoiceWorkFormset
+from .models import Invoice, InvoiceItem, InvoiceSubject, Receipt, InvoiceWork, InvoiceDueDate
 
 
 class InvoiceListView(LoginRequiredMixin, ListView):
@@ -18,7 +19,7 @@ class InvoiceListView(LoginRequiredMixin, ListView):
 
 class InvoiceCreateView(LoginRequiredMixin, CreateView):
     model = Invoice
-    fields = "__all__"
+    fields = ["subject", "work", "item", "session", "term", "due_date", "status"]
     success_url = "/finance/list"
 
     def get_context_data(self, **kwargs):
@@ -30,9 +31,17 @@ class InvoiceCreateView(LoginRequiredMixin, CreateView):
             context["subjects"] = InvoiceSubjectFormset(
                 self.request.POST, prefix="invoicesubject_set"
             )
+            context["work"] = InvoiceWorkFormset(
+                self.request.POST, prefix="invoicework_set"
+            )
+            context["due_date"] = InvoiceDueDateFormset(
+                self.request.POST, prefix="invoicedue_date_set"
+            )
         else:
             context["items"] = InvoiceItemFormset(prefix="invoiceitem_set")
             context["subjects"] = InvoiceSubjectFormset(prefix="invoicesubject_set")
+            context["work"] = InvoiceWorkFormset(prefix="invoicework_set")
+            context["due_date"] = InvoiceDueDateFormset(prefix="invoicedue_date_set")
         return context
 
     def form_valid(self, form):
@@ -55,19 +64,21 @@ class InvoiceCreateView(LoginRequiredMixin, CreateView):
 
 class InvoiceDetailView(LoginRequiredMixin, DetailView):
     model = Invoice
-    fields = "__all__"
+    fields = ["item", "session", "term", "subject", "work"]
 
     def get_context_data(self, **kwargs):
         context = super(InvoiceDetailView, self).get_context_data(**kwargs)
-        context["receipts"] = Receipt.objects.filter(invoice=self.object)
+        # context["receipts"] = Receipt.objects.filter(invoice=self.object)
         context["items"] = InvoiceItem.objects.filter(invoice=self.object)
         context["subjects"] = InvoiceSubject.objects.filter(invoice=self.object)
+        context["work"] = InvoiceWork.objects.filter(invoice=self.object)
+
         return context
 
 
 class InvoiceUpdateView(LoginRequiredMixin, UpdateView):
     model = Invoice
-    fields = ["item", "session", "term", "class_for", "balance_from_previous_term", "subject"]
+    fields = ["item", "session", "term", "subject", "work"]
 
     def get_context_data(self, **kwargs):
         context = super(InvoiceUpdateView, self).get_context_data(**kwargs)
@@ -81,10 +92,15 @@ class InvoiceUpdateView(LoginRequiredMixin, UpdateView):
             context["subjects"] = InvoiceSubjectFormset(
                 self.request.POST, instance=self.object
             )
+            context["work"] = InvoiceWorkFormset(
+                self.request.POST, instance=self.object
+            )
         else:
             context["receipts"] = InvoiceReceiptFormSet(instance=self.object)
             context["items"] = InvoiceItemFormset(instance=self.object)
             context["subjects"] = InvoiceSubjectFormset(instance=self.object)
+            context["work"] = InvoiceWorkFormset(instance=self.object)
+
         return context
 
     def form_valid(self, form):

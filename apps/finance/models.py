@@ -5,26 +5,29 @@ from django.utils import timezone
 from apps.corecode.models import AcademicSession, AcademicTerm, Tag
 from apps.others.models import Item
 from apps.subjects.models import Subject
+from apps.work.models import Work
 
 
 class Invoice(models.Model):
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, blank=True, null=True)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, blank=True, null=True)
+    work = models.ForeignKey(Work, on_delete=models.CASCADE, blank=True, null=True)
     session = models.ForeignKey(AcademicSession, on_delete=models.CASCADE)
     term = models.ForeignKey(AcademicTerm, on_delete=models.CASCADE)
-    class_for = models.ForeignKey(Tag, on_delete=models.CASCADE)
-    balance_from_previous_term = models.IntegerField(default=0)
+    class_for = models.ForeignKey(Tag, on_delete=models.CASCADE, null=True, blank=True)
+    balance_from_previous_term = models.IntegerField(default=0, null=True, blank=True)
+    due_date = models.DateField(default=timezone.now, null=True, blank=True)
     status = models.CharField(
         max_length=20,
-        choices=[("active", "Active"), ("closed", "Closed")],
-        default="active",
+        choices=[("done", "已完成"), ("----", "----"), ("failed", "未完成")],
+        default="----",
     )
 
     class Meta:
-        ordering = ["item", "term", "subject"]
+        ordering = ["subject", "work", "item"]
 
     def __str__(self):
-        return f"{self.item} {self.subject}"
+        return f"{self.subject} {self.work} {self.item}"
 
     def balance(self):
         payable = self.total_amount_payable()
@@ -62,6 +65,17 @@ class InvoiceSubject(models.Model):
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
     description = models.CharField(max_length=200)
     amount = models.IntegerField()
+
+
+class InvoiceWork(models.Model):
+    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
+    description = models.CharField(max_length=200)
+    amount = models.IntegerField()
+
+
+class InvoiceDueDate(models.Model):
+    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
+    due_date = models.DateField(default=timezone.now)
 
 
 class Receipt(models.Model):

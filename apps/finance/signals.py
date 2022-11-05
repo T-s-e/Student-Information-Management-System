@@ -8,7 +8,7 @@ from .models import Invoice
 def after_creating_invoice(sender, instance, created, **kwargs):
     if created:
         previous_inv = (
-            Invoice.objects.filter(item=instance.item, subject=instance.item)
+            Invoice.objects.filter(item=instance.item, subject=instance.subject, work=instance.work)
             .exclude(id=instance.id)
             .last()
         )
