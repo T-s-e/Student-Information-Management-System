@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from apps.finance.models import Invoice
 
 from .models import Work
 
@@ -16,6 +17,10 @@ class WorkDetailView(DetailView):
     model = Work
     template_name = "work/work_detail.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(WorkDetailView, self).get_context_data(**kwargs)
+        context["invoices"] = Invoice.objects.filter(work=self.object)
+        return context
 
 class WorkCreateView(SuccessMessageMixin, CreateView):
     model = Work

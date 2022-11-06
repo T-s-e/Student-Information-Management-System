@@ -22,7 +22,7 @@ class ItemDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ItemDetailView, self).get_context_data(**kwargs)
-        context["payments"] = Invoice.objects.filter(item=self.object)
+        context["invoices"] = Invoice.objects.filter(item=self.object)
         return context
 
 

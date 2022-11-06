@@ -68,5 +68,30 @@
       </div>
     </div>
 
+<h5>待办事项：</h5>
+    {% if invoices %}
+      <table class="table table-sm table-bordered table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th>S/N</th>
+            <th>学年-学期</th>
+            <th>截止日期</th>
+            <th>状态</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for invoice in invoices %}
+            <tr class='clickable-row' data-href="{% url 'invoice-detail' invoice.id %}">
+              <td>{{ invoice.id }}</td>
+              <td>{{ invoice.session}}-{{ invoice.term}}</td>
+              <td>{{ invoice.due_date}}</td>
+              <td>{{ invoice.get_status_display }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+        <p></p>
+    {% endif %}
 
 {% endblock content %}
