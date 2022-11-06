@@ -3,6 +3,16 @@
 
 {% block content-header %}
 <div class="card-header">
+    <h1 class="card-title">
+      <b>
+        {% if invoice.subject %}
+        {{ invoice.subject.subject }}
+        {% elif invoice.item %}
+        {{ invoice.item.item }}
+        {% else %}
+        {{ invoice.work.name }}
+        {%  endif %}
+      </b>（{{ object.get_status_display }}）</h1>
   <div class="card-tools">
     <a href="#" class="btn btn-tool">Print</a>
     <a href="{% url 'invoice-update' object.id %}" class="btn btn-tool">
@@ -19,87 +29,167 @@
 
 {% block content %}
 
-<div class="row">
-  <div class="col-sm-4">
-    <h3>{{ object }} </h3>
-    <h5>{{ object.session }} </h5>
-    <h5>{{ object.term }} </h5>
-<!--    <h5>{{ object.class_for }} </h5>-->
-    <h6>Status: {{ object.get_status_display }} </h6>
-    <hr>
-    <div>
-<!--      <h4>Expected Balance: {{ object.balance | intcomma }}</h4>-->
-    </div>
-  </div>
-  <div class="col-sm-8">
-    <table class="table table-sm table-bordered">
-      Invoice Breakdown</br>
-      <thead class="thead-light">
-        <tr>
-          <th>S/N</th>
-          <th>Description</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in items %}
-        <tr>
-          <td>{{ forloop.counter }} </td>
-          <td>{{ item.description }} </td>
-          <td>{{ item.amount }} </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-      <tfoot>
-        <tr>
-          <td></td>
-          <td>Total Amount this term</td>
-          <td>{{ object.amount_payable | intcomma}}</td>
-        </tr>
+<!--<div class="row">-->
+<!--  <div class="col-sm-4">-->
+<!--    <h3>{{ object }} </h3>-->
+<!--    <h5>{{ object.session }} </h5>-->
+<!--    <h5>{{ object.term }} </h5>-->
+<!--&lt;!&ndash;    <h5>{{ object.class_for }} </h5>&ndash;&gt;-->
+<!--    <h6>Status: {{ object.get_status_display }} </h6>-->
+<!--    <hr>-->
+<!--    <div>-->
+<!--&lt;!&ndash;      <h4>Expected Balance: {{ object.balance | intcomma }}</h4>&ndash;&gt;-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="col-sm-8">-->
+<!--    <table class="table table-sm table-bordered">-->
+<!--      Invoice Breakdown</br>-->
+<!--      <thead class="thead-light">-->
+<!--        <tr>-->
+<!--          <th>S/N</th>-->
+<!--          <th>Description</th>-->
+<!--          <th>Amount</th>-->
+<!--        </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--        {% for item in items %}-->
+<!--        <tr>-->
+<!--          <td>{{ forloop.counter }} </td>-->
+<!--          <td>{{ item.description }} </td>-->
+<!--          <td>{{ item.amount }} </td>-->
+<!--        </tr>-->
+<!--        {% endfor %}-->
+<!--      </tbody>-->
+<!--      <tfoot>-->
 <!--        <tr>-->
 <!--          <td></td>-->
-<!--          <td>Balance from previous term</td>-->
-<!--          <td>{{ object.balance_from_previous_term | intcomma }}</td>-->
+<!--          <td>Total Amount this term</td>-->
+<!--          <td>{{ object.amount_payable | intcomma}}</td>-->
 <!--        </tr>-->
-        <tr>
-          <td></td>
-          <td>Total Amount Payable</td>
-          <td>{{ object.total_amount_payable | intcomma}}</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>Total Amount Paid</td>
-          <td>{{ object.total_amount_paid | intcomma}}</td>
-        </tr>
+<!--&lt;!&ndash;        <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;          <td></td>&ndash;&gt;-->
+<!--&lt;!&ndash;          <td>Balance from previous term</td>&ndash;&gt;-->
+<!--&lt;!&ndash;          <td>{{ object.balance_from_previous_term | intcomma }}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;        </tr>&ndash;&gt;-->
+<!--        <tr>-->
+<!--          <td></td>-->
+<!--          <td>Total Amount Payable</td>-->
+<!--          <td>{{ object.total_amount_payable | intcomma}}</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--          <td></td>-->
+<!--          <td>Total Amount Paid</td>-->
+<!--          <td>{{ object.total_amount_paid | intcomma}}</td>-->
+<!--        </tr>-->
 
-      </tfoot>
-    </table>
-  </div>
+<!--      </tfoot>-->
+<!--    </table>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<hr>-->
+
+<!--<h5>Payment History</h5>-->
+<!--<table class="table table-bordered table-sm">-->
+<!--  <thead class="thead-light">-->
+<!--    <tr>-->
+<!--      <th>S/N</th>-->
+<!--      <th>Amount Paid</th>-->
+<!--      <th>Date Paid</th>-->
+<!--      <th>Comment Paid</th>-->
+<!--    </tr>-->
+<!--  </thead>-->
+<!--  <tbody>-->
+<!--    {% for receipt in receipts %}-->
+<!--    <tr>-->
+<!--      <td>{{ forloop.counter }}</td>-->
+<!--      <td>{{ receipt.amount_paid}}</td>-->
+<!--      <td>{{ receipt.date_paid}}</td>-->
+<!--      <td>{{ receipt.comment}}</td>-->
+<!--    </tr>-->
+<!--    {% endfor %}-->
+<!--  </tbody>-->
+<!--</table>-->
+
+<div class="row mb-4">
+      <div class="col-sm-4">
+        <div class="row mb-2">
+          <div class="col">
+            <table class="table table-sm table-bordered">
+              Invoice Breakdown</br>
+              <thead class="thead-light">
+                <tr>
+                  <th>S/N</th>
+                  <th>Description</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in items %}
+                <tr>
+                  <td>{{ forloop.counter }} </td>
+                  <td>{{ item.description }} </td>
+                  <td>{{ item.amount }} </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+        {% comment %} <h5>{{ object.current_class }} </h5> {% endcomment %}
+
+      </div>
+      <div class="clo-sm-1"> </div>
+      <div class="col-sm-7">
+        <div>
+          <div class="form-group border-bottom row">
+            <label class="col">
+              Professor
+            </label>
+            <div class="col">
+              {{ object.professor }}
+            </div>
+          </div>
+
+          <div class="form-group border-bottom row">
+            <label class="col">
+              Credit
+            </label>
+            <div class="col">
+              {{ object.credit}}
+            </div>
+          </div>
+
+          <div class="form-group border-bottom row">
+            <label class="col">
+              Property
+            </label>
+            <div class="col">
+              {{ object.get_property_display }}
+            </div>
+          </div>
+          <div class="form-group border-bottom row">
+            <label class="col">
+              Online Sourse
+            </label>
+            <div class="col">
+              <a href={{ object.online_source }}>{{ object.online_source }}</a>
+            </div>
+          </div>
+          <div class="form-group border-bottom row">
+            <label class="col">
+              Date of Test
+            </label>
+            <div class="col">
+              {{ object.date_of_test }}
+            </div>
+          </div>
+
+        </div>
+
+      </div>
 </div>
-
-<hr>
-
-<h5>Payment History</h5>
-<table class="table table-bordered table-sm">
-  <thead class="thead-light">
-    <tr>
-      <th>S/N</th>
-      <th>Amount Paid</th>
-      <th>Date Paid</th>
-      <th>Comment Paid</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for receipt in receipts %}
-    <tr>
-      <td>{{ forloop.counter }}</td>
-      <td>{{ receipt.amount_paid}}</td>
-      <td>{{ receipt.date_paid}}</td>
-      <td>{{ receipt.comment}}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
 
 
 {% endblock content %}

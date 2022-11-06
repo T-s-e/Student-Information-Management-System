@@ -74,33 +74,33 @@
   </div>
 
 
-  {% if object %}
-    <h4>RECEIPTS</h4>
-    <table class="table table-sm">
-      {{ receipts.management_form }}
-      <thead class="thead-light">
-        <tr>
-          <th>Amount Paid</th>
-          <th>Date Paid</th>
-          <th>Comment</th>
-          <th><i class="fa fa-trash"></i></th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for receipt in receipts %}
-        {% for hidden in receipt.hidden_fields %}
-        {{ hidden }}
-        {% endfor %}
-        <tr>
-          {% for field in receipt.visible_fields %}
-          <td>{{ field | add_class:"form-control form-control-sm"}}</td>
-          {% endfor %}
-        </tr>
-        {% endfor %}
+<!--  {% if object %}-->
+<!--    <h4>RECEIPTS</h4>-->
+<!--    <table class="table table-sm">-->
+<!--      {{ receipts.management_form }}-->
+<!--      <thead class="thead-light">-->
+<!--        <tr>-->
+<!--          <th>Amount Paid</th>-->
+<!--          <th>Date Paid</th>-->
+<!--          <th>Comment</th>-->
+<!--          <th><i class="fa fa-trash"></i></th>-->
+<!--        </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--        {% for receipt in receipts %}-->
+<!--        {% for hidden in receipt.hidden_fields %}-->
+<!--        {{ hidden }}-->
+<!--        {% endfor %}-->
+<!--        <tr>-->
+<!--          {% for field in receipt.visible_fields %}-->
+<!--          <td>{{ field | add_class:"form-control form-control-sm"}}</td>-->
+<!--          {% endfor %}-->
+<!--        </tr>-->
+<!--        {% endfor %}-->
 
-      </tbody>
-    </table>
-  {% endif %}
+<!--      </tbody>-->
+<!--    </table>-->
+<!--  {% endif %}-->
 
   {% if object %}
   <input type="submit" class="btn btn-primary" value="更新该日程">
