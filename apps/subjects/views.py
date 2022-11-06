@@ -24,7 +24,7 @@ class SubjectDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(SubjectDetailView, self).get_context_data(**kwargs)
-        context["payments"] = Invoice.objects.filter(subject=self.object)
+        context["invoices"] = Invoice.objects.filter(subject=self.object)
         return context
 
 

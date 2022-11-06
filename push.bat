@@ -1,4 +1,4 @@
 @echo off
 git add .
-git commit -m "modified schedule module"
+git commit -m "link to subject"
 git push origin master
