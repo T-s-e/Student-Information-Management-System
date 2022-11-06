@@ -34,6 +34,9 @@ class InvoiceCreateView(LoginRequiredMixin, CreateView):
             context["work"] = InvoiceWorkFormset(
                 self.request.POST, prefix="invoicework_set"
             )
+            context["receipts"] = InvoiceReceiptFormSet(
+                self.request.POST, instance=self.object
+            )
             # context["due_date"] = self.request.POST.due_date
             # context["due_date"].widget = widgets.DateInput(attrs={"type": "date"})
             # context["due_date"] = InvoiceDueDateFormset(
@@ -43,6 +46,8 @@ class InvoiceCreateView(LoginRequiredMixin, CreateView):
             context["items"] = InvoiceItemFormset(prefix="invoiceitem_set")
             context["subjects"] = InvoiceSubjectFormset(prefix="invoicesubject_set")
             context["work"] = InvoiceWorkFormset(prefix="invoicework_set")
+            context["receipts"] = InvoiceReceiptFormSet(instance=self.object)
+
             # context["due_date"].widget = widgets.DateInput(attrs={"type": "date"})
             # context["due_date"] = InvoiceDueDateFormset(prefix="invoicedue_date_set")
             # context["due_date"] = self.request.POST.due_date
@@ -77,6 +82,7 @@ class InvoiceDetailView(LoginRequiredMixin, DetailView):
         context["items"] = InvoiceItem.objects.filter(invoice=self.object)
         context["subjects"] = InvoiceSubject.objects.filter(invoice=self.object)
         context["work"] = InvoiceWork.objects.filter(invoice=self.object)
+
         # context["due_date"] = InvoiceDueDate.objects.filter(invoice=self.object)
 
         return context
