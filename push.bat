@@ -1,4 +1,4 @@
 @echo off
 git add .
-git commit -m "schedule linked to subject & others & work"
+git commit -m "modified subject"
 git push origin master
