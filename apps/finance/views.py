@@ -62,13 +62,6 @@ class InvoiceCreateView(LoginRequiredMixin, CreateView):
             if form.is_valid() and formset.is_valid():
                 formset.instance = self.object
                 formset.save()
-        #
-        # formset = context["subjects"]
-        # self.object = form.save()
-        # if self.object.id != None:
-        #     if form.is_valid() and formset.is_valid():
-        #         formset.instance = self.object
-        #         formset.save()
         return super().form_valid(form)
 
 
@@ -117,16 +110,24 @@ class InvoiceUpdateView(LoginRequiredMixin, UpdateView):
             context["work"] = InvoiceWorkFormset(instance=self.object)
             # context["due_date"] = InvoiceDueDateFormset(instance=self.object)
         return context
-
     def form_valid(self, form):
         context = self.get_context_data()
-        formset = context["receipts"]
-        itemsformset = context["items"]
-        if form.is_valid() and formset.is_valid() and itemsformset.is_valid():
-            form.save()
-            formset.save()
-            itemsformset.save()
+        formset = context["items"]
+        self.object = form.save()
+        if self.object.id != None:
+            if form.is_valid() and formset.is_valid():
+                formset.instance = self.object
+                formset.save()
         return super().form_valid(form)
+    # def form_valid(self, form):
+    #     context = self.get_context_data()
+    #     formset = context["receipts"]
+    #     itemsformset = context["items"]
+    #     if form.is_valid() and formset.is_valid() and itemsformset.is_valid():
+    #         form.save()
+    #         formset.save()
+    #         itemsformset.save()
+    #     return super().form_valid(form)
 
 
 class InvoiceDeleteView(LoginRequiredMixin, DeleteView):
